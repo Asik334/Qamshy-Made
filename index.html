@@ -1,0 +1,2295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qamshy Made — Кастом мягкая мебель в Казахстане</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAFAF8;
+  --white:#FFFFFF;
+  --ivory:#F5F2EE;
+  --stone:#E8E4DE;
+  --sand:#D0C9BF;
+  --forest:#2B4A3C;
+  --forest2:#3A5C4E;
+  --forest3:#4A7060;
+  --gold:#C8A055;
+  --dark:#18181A;
+  --gray:#6B6B68;
+  --lgray:#9A9A96;
+  --serif:'Playfair Display',serif;
+  --sans:'Mulish',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--dark);font-weight:300;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{border:none;background:none;cursor:pointer;font-family:var(--sans)}
+
+/* ── TOP BAR ── */
+.topbar{
+  background:var(--forest);
+  padding:10px 0;
+  text-align:center;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:1.5px;
+  color:rgba(255,255,255,0.85);
+}
+.topbar span{color:var(--gold)}
+.topbar a{color:rgba(255,255,255,0.85);text-decoration:underline;text-underline-offset:2px}
+
+/* ── NAV ── */
+nav{
+  background:var(--white);
+  border-bottom:1px solid var(--stone);
+  position:sticky;top:0;z-index:200;
+}
+.nav-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:72px;
+  border-bottom:1px solid var(--stone);
+}
+.nav-logo{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--dark);letter-spacing:0.5px;
+}
+.nav-logo span{color:var(--forest)}
+.nav-search{
+  flex:1;max-width:440px;margin:0 40px;
+  display:flex;align-items:center;
+  border:1.5px solid var(--stone);
+  padding:0 16px;height:42px;
+  transition:border-color .2s;
+}
+.nav-search:focus-within{border-color:var(--forest)}
+.nav-search input{
+  flex:1;border:none;outline:none;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  background:transparent;color:var(--dark);
+}
+.nav-search input::placeholder{color:var(--lgray)}
+.nav-search svg{width:16px;height:16px;stroke:var(--lgray);fill:none}
+.nav-actions{display:flex;align-items:center;gap:24px}
+.nav-act{
+  display:flex;flex-direction:column;align-items:center;
+  font-size:10px;letter-spacing:1px;color:var(--gray);
+  gap:4px;cursor:pointer;transition:color .2s;
+}
+.nav-act:hover{color:var(--forest)}
+.nav-act svg{width:22px;height:22px;stroke:currentColor;fill:none}
+.nav-cart-badge{
+  position:relative;
+}
+.badge{
+  position:absolute;top:-6px;right:-8px;
+  background:var(--forest);color:#fff;
+  font-size:9px;font-weight:600;
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.nav-bottom{
+  display:flex;align-items:center;gap:0;
+  padding:0 60px;height:46px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.nav-bottom::-webkit-scrollbar{display:none}
+.nav-cat{
+  font-size:12px;font-weight:500;letter-spacing:0.5px;
+  color:var(--gray);padding:0 18px;height:100%;
+  display:flex;align-items:center;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;cursor:pointer;
+}
+.nav-cat:hover,.nav-cat.active{color:var(--forest);border-bottom-color:var(--forest)}
+
+/* ── HERO ── */
+.hero{
+  display:grid;grid-template-columns:1fr 480px;
+  min-height:520px;
+  background:var(--ivory);
+  overflow:hidden;
+}
+.hero-content{
+  padding:70px 80px 70px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--forest);color:#fff;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  padding:7px 16px;margin-bottom:28px;width:fit-content;
+}
+.hero-badge::before{content:'★';color:var(--gold)}
+.hero-title{
+  font-family:var(--serif);font-size:clamp(40px,4.5vw,62px);
+  font-weight:400;line-height:1.12;color:var(--dark);
+  margin-bottom:18px;
+}
+.hero-title em{font-style:italic;color:var(--forest)}
+.hero-desc{
+  font-size:15px;line-height:1.8;color:var(--gray);
+  max-width:460px;margin-bottom:40px;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.btn-main{
+  background:var(--forest);color:#fff;
+  padding:15px 36px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);
+  transition:background .25s;display:inline-block;
+}
+.btn-main:hover{background:var(--dark)}
+.btn-outline{
+  border:1.5px solid var(--dark);color:var(--dark);
+  padding:14px 36px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);
+  transition:background .25s,color .25s;display:inline-block;
+}
+.btn-outline:hover{background:var(--dark);color:#fff}
+.hero-trust{display:flex;gap:32px}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gray)}
+.trust-item svg{width:18px;height:18px;stroke:var(--forest);fill:none}
+
+.hero-visual{
+  background:var(--forest);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-visual-inner{padding:40px;width:100%}
+.promo-card{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  padding:36px;
+  position:relative;
+}
+.promo-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.promo-title{font-family:var(--serif);font-size:32px;font-weight:400;color:#fff;line-height:1.2;margin-bottom:8px}
+.promo-sub{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:28px}
+.promo-price-old{font-size:14px;color:rgba(255,255,255,0.3);text-decoration:line-through;margin-bottom:4px}
+.promo-price{font-family:var(--serif);font-size:40px;color:var(--gold);line-height:1}
+.promo-price span{font-size:18px}
+.promo-cta{
+  margin-top:24px;display:block;text-align:center;
+  background:var(--gold);color:var(--dark);
+  padding:14px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  transition:opacity .2s;
+}
+.promo-cta:hover{opacity:0.88}
+.promo-badge-corner{
+  position:absolute;top:20px;right:20px;
+  background:var(--gold);color:var(--dark);
+  width:56px;height:56px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;text-align:center;line-height:1.2;
+}
+
+/* ── BANNERS ROW ── */
+.banners{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  background:var(--stone);
+  margin-top:2px;
+}
+.banner{
+  background:var(--white);padding:28px 24px;
+  display:flex;align-items:center;gap:16px;
+  cursor:pointer;transition:background .2s;
+}
+.banner:hover{background:var(--ivory)}
+.banner-icon{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--forest);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.banner-icon svg{width:22px;height:22px;stroke:#fff;fill:none}
+.banner-text h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.banner-text p{font-size:11px;color:var(--lgray);line-height:1.4}
+
+/* ── SECTION SHARED ── */
+.section{padding:72px 0}
+.container{max-width:1320px;margin:0 auto;padding:0 60px}
+.sec-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:40px;
+}
+.sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--forest);margin-bottom:10px}
+.sec-title{font-family:var(--serif);font-size:clamp(28px,3vw,42px);font-weight:400;line-height:1.2;color:var(--dark)}
+.sec-title em{font-style:italic}
+.sec-link{
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--forest);
+  display:flex;align-items:center;gap:8px;
+  white-space:nowrap;
+}
+.sec-link::after{content:'→';transition:transform .2s}
+.sec-link:hover::after{transform:translateX(4px)}
+
+/* ── FILTER TABS ── */
+.filter-tabs{display:flex;gap:0;border-bottom:1px solid var(--stone);margin-bottom:36px;overflow-x:auto;scrollbar-width:none}
+.filter-tabs::-webkit-scrollbar{display:none}
+.ftab{
+  padding:12px 24px;font-size:12px;font-weight:500;letter-spacing:1px;
+  color:var(--lgray);cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s,border-color .2s;
+}
+.ftab:hover,.ftab.active{color:var(--forest);border-bottom-color:var(--forest)}
+
+/* ── PRODUCTS GRID ── */
+.products-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+}
+.prod-card{
+  background:var(--white);
+  position:relative;overflow:hidden;cursor:pointer;
+}
+.prod-card:hover .prod-img-inner{transform:scale(1.04)}
+.prod-img{
+  aspect-ratio:4/3;overflow:hidden;
+  background:var(--ivory);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.prod-img-inner{transition:transform .7s cubic-bezier(.25,.46,.45,.94)}
+.prod-labels{
+  position:absolute;top:12px;left:12px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.prod-lbl{
+  font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:5px 10px;
+}
+.lbl-new{background:var(--forest);color:#fff}
+.lbl-hit{background:var(--gold);color:var(--dark)}
+.lbl-sale{background:#D44;color:#fff}
+.prod-wish{
+  position:absolute;top:12px;right:12px;
+  width:32px;height:32px;background:rgba(255,255,255,0.9);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s;
+}
+.prod-card:hover .prod-wish{opacity:1}
+.prod-wish svg{width:16px;height:16px;stroke:var(--gray);fill:none}
+.prod-info{padding:20px}
+.prod-category{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lgray);margin-bottom:6px}
+.prod-name{font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:8px;line-height:1.3}
+.prod-colors{display:flex;gap:5px;margin-bottom:14px}
+.color-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1)}
+.prod-footer{display:flex;align-items:center;justify-content:space-between}
+.prod-price{font-family:var(--serif);font-size:22px;font-weight:400}
+.prod-price-old{font-size:12px;color:var(--lgray);text-decoration:line-through;margin-top:2px}
+.prod-add{
+  background:var(--forest);color:#fff;
+  padding:10px 18px;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:var(--sans);
+  opacity:0;transform:translateY(4px);
+  transition:opacity .25s,transform .25s,background .2s;
+}
+.prod-card:hover .prod-add{opacity:1;transform:translateY(0)}
+.prod-add:hover{background:var(--dark)}
+.prod-installment{font-size:11px;color:var(--forest);font-weight:500;margin-top:6px}
+
+/* ── INSTALLMENT SECTION ── */
+.installment-section{background:var(--forest);padding:72px 0}
+.inst-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.inst-text .sec-label{color:var(--gold)}
+.inst-text .sec-title{color:#fff}
+.inst-text p{font-size:14px;line-height:1.9;color:rgba(255,255,255,0.6);margin:20px 0 36px}
+.inst-cards{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.inst-card{
+  background:rgba(255,255,255,0.07);
+  padding:28px 24px;
+}
+.inst-card-num{
+  font-family:var(--serif);font-size:42px;font-weight:400;
+  color:var(--gold);line-height:1;margin-bottom:8px;
+}
+.inst-card-label{font-size:11px;font-weight:500;letter-spacing:1px;color:rgba(255,255,255,0.5)}
+.inst-card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}
+.inst-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-gold{
+  background:var(--gold);color:var(--dark);
+  padding:15px 32px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);transition:opacity .2s;display:inline-block;
+}
+.btn-gold:hover{opacity:.88}
+.btn-trans{
+  border:1.5px solid rgba(255,255,255,0.25);color:#fff;
+  padding:14px 32px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);transition:border-color .2s;display:inline-block;
+}
+.btn-trans:hover{border-color:#fff}
+
+.inst-visual{
+  display:grid;grid-template-columns:1fr 1fr;gap:3px;
+}
+.bank-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:24px 20px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  height:120px;
+}
+.bank-logo{font-size:12px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.5)}
+.bank-name{font-size:13px;font-weight:600;color:#fff}
+.bank-rate{font-size:11px;color:var(--gold)}
+
+/* ── PAYMENT SECTION ── */
+.payment-section{background:var(--ivory);padding:72px 0}
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:48px}
+.pay-card{
+  background:var(--white);padding:36px 32px;
+  border-bottom:3px solid transparent;
+  transition:border-color .25s,transform .25s;cursor:pointer;
+}
+.pay-card:hover{border-bottom-color:var(--forest);transform:translateY(-3px)}
+.pay-icon{
+  width:52px;height:52px;
+  background:var(--forest);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.pay-icon svg{width:26px;height:26px;stroke:#fff;fill:none}
+.pay-card h3{font-size:15px;font-weight:600;margin-bottom:10px}
+.pay-card p{font-size:13px;color:var(--gray);line-height:1.7}
+.pay-card .pay-tag{
+  display:inline-block;margin-top:14px;
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--forest);border-bottom:1px solid var(--forest);padding-bottom:1px;
+}
+
+/* ── CATEGORIES ── */
+.categories-section{background:var(--white);padding:72px 0}
+.cats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:48px}
+.cat-card{
+  position:relative;overflow:hidden;
+  aspect-ratio:4/3;cursor:pointer;
+  background:var(--forest);
+  display:flex;align-items:flex-end;
+}
+.cat-card:hover .cat-overlay{background:rgba(20,40,30,0.7)}
+.cat-card:hover .cat-svg{transform:scale(1.06)}
+.cat-svg{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .7s ease;
+}
+.cat-overlay{
+  position:absolute;inset:0;
+  background:rgba(20,40,30,0.5);
+  transition:background .35s;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:28px;
+}
+.cat-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.cat-name{font-family:var(--serif);font-size:26px;font-weight:400;color:#fff;line-height:1.2;margin-bottom:4px}
+.cat-count{font-size:12px;color:rgba(255,255,255,0.45)}
+.cat-arrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:#fff;margin-top:14px;opacity:0;transform:translateX(-8px);
+  transition:opacity .3s,transform .3s;
+}
+.cat-card:hover .cat-arrow{opacity:1;transform:translateX(0)}
+.cat-arrow::after{content:'→'}
+
+/* big card */
+.cat-card.big{grid-row:span 2;aspect-ratio:auto}
+
+/* ── JOURNAL/BLOG ── */
+.journal-section{background:var(--ivory);padding:72px 0}
+.journal-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3px;margin-top:48px}
+.art-card{background:var(--white);cursor:pointer;overflow:hidden}
+.art-card:hover .art-img-inner{transform:scale(1.04)}
+.art-img{aspect-ratio:16/9;overflow:hidden;background:var(--stone);position:relative;display:flex;align-items:center;justify-content:center}
+.art-img.tall{aspect-ratio:4/5}
+.art-img-inner{transition:transform .7s ease}
+.art-body{padding:24px}
+.art-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--forest);margin-bottom:10px}
+.art-title{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.35;margin-bottom:8px}
+.art-card:first-child .art-title{font-size:26px}
+.art-meta{font-size:11px;color:var(--lgray)}
+
+/* ── REVIEWS ── */
+.reviews-section{background:var(--white);padding:72px 0}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:48px}
+.rev-card{
+  background:var(--ivory);padding:36px;
+  border-left:3px solid var(--stone);
+  transition:border-color .25s;cursor:pointer;
+}
+.rev-card:hover{border-left-color:var(--forest)}
+.rev-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:16px}
+.rev-text{font-family:var(--serif);font-size:15px;font-weight:400;font-style:italic;line-height:1.7;color:var(--dark);margin-bottom:24px}
+.rev-author{display:flex;align-items:center;gap:12px}
+.rev-av{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--forest);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:16px;color:#fff;
+}
+.rev-name{font-size:13px;font-weight:600}
+.rev-city{font-size:11px;color:var(--lgray)}
+
+/* ── CONTACT / CTA ── */
+.contact-section{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+.contact-bg{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.015) 0px,
+    rgba(255,255,255,0.015) 1px,
+    transparent 1px,
+    transparent 80px
+  );
+}
+.contact-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.contact-text .sec-title{color:#fff}
+.contact-text .sec-label{color:var(--gold)}
+.contact-text p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.9;margin:20px 0 0}
+.contact-form{display:flex;flex-direction:column;gap:3px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.form-field input,.form-field select{
+  width:100%;padding:16px 18px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#fff;font-family:var(--sans);font-size:13px;font-weight:300;
+  outline:none;transition:border-color .2s;appearance:none;
+}
+.form-field input::placeholder{color:rgba(255,255,255,0.3)}
+.form-field input:focus,.form-field select:focus{border-color:var(--gold)}
+.form-field select option{background:var(--dark);color:#fff}
+.form-submit{
+  background:var(--gold);color:var(--dark);
+  padding:18px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);cursor:pointer;
+  transition:opacity .2s;
+  margin-top:4px;
+}
+.form-submit:hover{opacity:.88}
+.form-note{font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin-top:6px}
+
+/* ── FOOTER ── */
+footer{background:#111112;padding:60px 0 0}
+.footer-main{
+  display:grid;grid-template-columns:280px 1fr 1fr 1fr;gap:60px;
+  padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.footer-brand .nav-logo{color:#fff;display:block;margin-bottom:16px}
+.footer-brand p{font-size:12px;color:rgba(255,255,255,0.3);line-height:1.7;margin-bottom:20px}
+.footer-contacts a{display:block;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px;transition:color .2s}
+.footer-contacts a:hover{color:#fff}
+.footer-col h5{
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;font-weight:600;
+}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:10px}
+.footer-col a{font-size:12px;color:rgba(255,255,255,0.35);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{
+  padding:24px 0;display:flex;justify-content:space-between;align-items:center;
+}
+.footer-bottom p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:0.5px}
+.footer-socials{display:flex;gap:10px}
+.soc-btn{
+  width:34px;height:34px;border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);
+  transition:border-color .2s,color .2s;
+}
+.soc-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── WHATSAPP ── */
+.wa-float{
+  position:fixed;bottom:32px;right:32px;z-index:300;
+  width:54px;height:54px;background:#25D366;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 24px rgba(37,211,102,.35);
+  transition:transform .3s,box-shadow .3s;
+  text-decoration:none;
+}
+.wa-float:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(37,211,102,.45)}
+.wa-float svg{width:28px;height:28px;fill:#fff}
+
+/* ── SCROLL REVEAL ── */
+.sr{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.sr.vis{opacity:1;transform:translateY(0)}
+.sr.d1{transition-delay:.1s}.sr.d2{transition-delay:.2s}.sr.d3{transition-delay:.3s}.sr.d4{transition-delay:.4s}
+
+/* ── BURGER BUTTON ── */
+.burger{
+  display:none;
+  flex-direction:column;justify-content:center;align-items:center;
+  width:40px;height:40px;cursor:pointer;gap:5px;flex-shrink:0;
+}
+.burger span{
+  display:block;width:24px;height:2px;
+  background:var(--dark);border-radius:2px;
+  transition:transform .3s,opacity .3s;
+}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE MENU OVERLAY ── */
+.mob-menu{
+  display:none;
+  position:fixed;inset:0;top:0;z-index:199;
+  background:var(--white);
+  flex-direction:column;
+  padding-top:0;
+  overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu-inner{
+  padding:80px 28px 40px;
+  display:flex;flex-direction:column;gap:0;
+}
+.mob-nav-item{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--dark);padding:14px 0;
+  border-bottom:1px solid var(--stone);
+  display:block;cursor:pointer;
+}
+.mob-nav-item:active{color:var(--forest)}
+.mob-actions{
+  display:flex;flex-direction:column;gap:12px;
+  margin-top:32px;
+}
+.mob-whatsapp{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#25D366;color:#fff;
+  padding:16px;font-size:13px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;
+}
+.mob-search-bar{
+  display:flex;align-items:center;
+  border:1.5px solid var(--stone);
+  padding:0 16px;height:46px;
+  margin-top:24px;
+}
+.mob-search-bar input{
+  flex:1;border:none;outline:none;
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  background:transparent;color:var(--dark);
+}
+.mob-search-bar input::placeholder{color:var(--lgray)}
+.mob-search-bar svg{width:18px;height:18px;stroke:var(--lgray);fill:none;flex-shrink:0}
+.mob-contacts{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.mob-contacts a, .mob-contacts span{font-size:13px;color:var(--gray);display:block}
+
+/* ── MOBILE ── */
+@media(max-width:1100px){
+  .nav-top,.nav-bottom{padding:0 24px}
+  .container{padding:0 24px}
+  .hero{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-content{padding:60px 24px 60px}
+  .banners{grid-template-columns:1fr 1fr}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .inst-grid{grid-template-columns:1fr;gap:40px}
+  .pay-methods{grid-template-columns:1fr 1fr}
+  .cats-grid{grid-template-columns:1fr 1fr}
+  .cat-card.big{grid-row:auto;aspect-ratio:4/3}
+  .journal-grid{grid-template-columns:1fr}
+  .reviews-grid{grid-template-columns:1fr}
+  .contact-inner{grid-template-columns:1fr;gap:48px}
+  .footer-main{grid-template-columns:1fr 1fr;gap:32px}
+}
+
+@media(max-width:640px){
+  /* TOP BAR */
+  .topbar{font-size:10px;letter-spacing:0.5px;padding:8px 12px}
+
+  /* NAV */
+  .nav-top{padding:0 16px;height:60px}
+  .nav-bottom{display:none}
+  .nav-search{display:none}
+  .nav-act span{display:none}
+  .nav-act svg{width:24px;height:24px}
+  .nav-actions{gap:16px}
+  .nav-actions .btn-main{display:none}
+  .burger{display:flex}
+  .mob-menu{display:flex}
+
+  /* HERO */
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-visual{display:none}
+  .hero-content{padding:40px 20px 48px}
+  .hero-badge{font-size:9px;letter-spacing:1.5px;padding:6px 12px;margin-bottom:20px}
+  .hero-title{font-size:clamp(30px,8vw,42px);margin-bottom:14px}
+  .hero-desc{font-size:13px;margin-bottom:28px;max-width:100%}
+  .hero-ctas{flex-direction:column;gap:10px;margin-bottom:32px}
+  .hero-ctas .btn-main,.hero-ctas .btn-outline{text-align:center;padding:15px 24px;font-size:11px}
+  .hero-trust{flex-direction:column;gap:10px}
+  .trust-item{font-size:11px}
+
+  /* BANNERS */
+  .banners{grid-template-columns:1fr}
+  .banner{padding:18px 16px}
+  .banner-icon{width:38px;height:38px}
+  .banner-icon svg{width:18px;height:18px}
+  .banner-text h4{font-size:12px}
+  .banner-text p{font-size:10px}
+
+  /* SECTION */
+  .section{padding:48px 0}
+  .container{padding:0 16px}
+  .sec-title{font-size:clamp(24px,7vw,34px)}
+  .sec-header{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:28px}
+
+  /* FILTER TABS */
+  .filter-tabs{margin-bottom:24px}
+  .ftab{padding:10px 16px;font-size:11px}
+
+  /* PRODUCTS */
+  .products-grid{grid-template-columns:1fr 1fr;gap:2px}
+  .prod-info{padding:14px 12px}
+  .prod-name{font-size:15px}
+  .prod-price{font-size:18px}
+  .prod-add{opacity:1;transform:none;font-size:9px;padding:8px 10px}
+  .prod-wish{opacity:1}
+  .prod-card:hover .prod-add{opacity:1;transform:none}
+
+  /* INSTALLMENT */
+  .installment-section{padding:48px 0}
+  .inst-grid{grid-template-columns:1fr;gap:32px}
+  .inst-cards{grid-template-columns:1fr 1fr;gap:3px}
+  .inst-card{padding:20px 16px}
+  .inst-card-num{font-size:32px}
+  .inst-visual{grid-template-columns:1fr 1fr;gap:3px}
+  .bank-card{height:100px;padding:18px 14px}
+  .inst-ctas{flex-direction:column}
+  .inst-ctas .btn-gold,.inst-ctas .btn-trans{text-align:center;padding:14px 24px}
+
+  /* PAYMENT */
+  .payment-section{padding:48px 0}
+  .pay-methods{grid-template-columns:1fr;gap:3px;margin-top:28px}
+  .pay-card{padding:24px 20px}
+
+  /* CATEGORIES */
+  .categories-section{padding:48px 0}
+  .cats-grid{grid-template-columns:1fr 1fr;gap:3px;margin-top:28px}
+  .cat-card{aspect-ratio:3/2}
+
+  /* JOURNAL */
+  .journal-grid{grid-template-columns:1fr;gap:3px}
+  .j-article{padding:28px 20px}
+
+  /* REVIEWS */
+  .reviews-grid{grid-template-columns:1fr;gap:16px}
+  .rev-card{padding:24px 20px}
+
+  /* CONTACT */
+  .contact-section{padding:48px 0}
+  .contact-inner{grid-template-columns:1fr;gap:36px}
+  .contact-form{padding:28px 20px}
+  .form-row{grid-template-columns:1fr;gap:0}
+  .contact-text p{font-size:13px}
+
+  /* FOOTER */
+  .footer-main{grid-template-columns:1fr;gap:32px;padding-bottom:32px}
+  .footer-col{padding-top:16px;border-top:1px solid var(--stone)}
+  footer{padding:40px 0 24px}
+  .footer-bottom{flex-direction:column;gap:16px;text-align:center}
+
+  /* WHATSAPP */
+  .wa-float{bottom:20px;right:16px;width:50px;height:50px}
+  .wa-float svg{width:24px;height:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  🇰🇿 Доставка по всему Казахстану · <span>Рассрочка 0%</span> на 12 месяцев · Онлайн-оплата 24/7 · Консультация: <a href="https://wa.me/77718431358">WhatsApp</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-top">
+    <a href="#" class="nav-logo">Qamshy <span>Made</span></a>
+    <div class="nav-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Поиск: кровать, диван, кресло...">
+    </div>
+    <div class="nav-actions">
+      <div class="nav-act">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Избранное</span>
+      </div>
+      <div class="nav-act nav-cart-badge">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Корзина</span>
+        <span class="badge">0</span>
+      </div>
+      <div class="nav-act" onclick="openAuthModal()" id="authNavBtn">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="authNavLabel">Войти</span>
+      </div>
+      <a href="#contact" class="btn-main" style="padding:12px 24px;font-size:11px">Заказать</a>
+      <button class="burger" onclick="toggleMenu()" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <div class="nav-cat active" onclick="filterProducts('all')">Все товары</div>
+    <div class="nav-cat" onclick="filterProducts('beds')">Кровати</div>
+    <div class="nav-cat" onclick="filterProducts('sofas')">Диваны</div>
+    <div class="nav-cat" onclick="filterProducts('chairs')">Кресла</div>
+    <div class="nav-cat" onclick="filterProducts('sets')">Спальные гарнитуры</div>
+    <div class="nav-cat">Рассрочка</div>
+    <div class="nav-cat">Акции</div>
+    <div class="nav-cat">Доставка</div>
+    <div class="nav-cat">О нас</div>
+    <div class="nav-cat">Контакты</div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-menu-inner">
+    <div class="mob-search-bar">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Поиск...">
+    </div>
+    <a class="mob-nav-item" href="#catalog" onclick="closeMenu()">Все товары</a>
+    <a class="mob-nav-item" href="#catalog" onclick="closeMenu();filterProducts('beds')">Кровати</a>
+    <a class="mob-nav-item" href="#catalog" onclick="closeMenu();filterProducts('sofas')">Диваны</a>
+    <a class="mob-nav-item" href="#catalog" onclick="closeMenu();filterProducts('chairs')">Кресла</a>
+    <a class="mob-nav-item" href="#installment" onclick="closeMenu()">Рассрочка 0%</a>
+    <a class="mob-nav-item" href="#categories" onclick="closeMenu()">Категории</a>
+    <a class="mob-nav-item" href="#reviews" onclick="closeMenu()">Отзывы</a>
+    <a class="mob-nav-item" href="#contact" onclick="closeMenu()">Контакты</a>
+    <div class="mob-actions">
+      <a href="https://wa.me/77718431358" class="mob-whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Написать в WhatsApp
+      </a>
+      <a href="#contact" class="btn-main" style="text-align:center;padding:16px" onclick="closeMenu()">Оставить заявку</a>
+    </div>
+    <div class="mob-contacts">
+      <span>📍 Актобе, Казахстан</span>
+      <span>📷 Instagram: @qamshy.made</span>
+    </div>
+  </div>
+</div>
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Кастом мебель · Актобе</div>
+    <h1 class="hero-title">Мягкая мебель,<br>сделанная <em>для вас</em><br>в Казахстане</h1>
+    <p class="hero-desc">Кровати и диваны под заказ — любой размер, цвет, ткань. Производство в Актобе. Доставка по всему Казахстану.</p>
+    <div class="hero-ctas">
+      <a href="#catalog" class="btn-main">Смотреть каталог</a>
+      <a href="#installment" class="btn-outline">Рассрочка 0%</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        300+ заказов
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Гарантия 2 года
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Срок 14–21 день
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-inner">
+      <div class="promo-card">
+        <div class="promo-badge-corner">−15%<br>🇰🇿</div>
+        <div class="promo-label">Акция · Апрель 2026</div>
+        <div class="promo-title">Кровать<br>«Arco Forest»</div>
+        <div class="promo-sub">Велюр · Лён · Шенилл</div>
+        <div class="promo-price-old">212 000 ₸</div>
+        <div class="promo-price">180 000 <span>₸</span></div>
+        <a href="#contact" class="promo-cta">Заказать сейчас</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BANNERS -->
+<div class="banners">
+  <div class="banner" onclick="document.getElementById('installment').scrollIntoView({behavior:'smooth'})">
+    <div class="banner-icon">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    </div>
+    <div class="banner-text">
+      <h4>Рассрочка 0%</h4>
+      <p>Каспи, Халык, Freedom Bank — до 24 мес.</p>
+    </div>
+  </div>
+  <div class="banner" onclick="document.getElementById('payment').scrollIntoView({behavior:'smooth'})">
+    <div class="banner-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div class="banner-text">
+      <h4>Онлайн-оплата</h4>
+      <p>Kaspi Pay, Visa/MC, Юмани, перевод</p>
+    </div>
+  </div>
+  <div class="banner">
+    <div class="banner-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <div class="banner-text">
+      <h4>Срок 14–21 день</h4>
+      <p>Фотоотчёт на каждом этапе производства</p>
+    </div>
+  </div>
+  <div class="banner">
+    <div class="banner-icon">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    </div>
+    <div class="banner-text">
+      <h4>Доставка по КZ</h4>
+      <p>Астана, Алматы, Актобе и весь Казахстан</p>
+    </div>
+  </div>
+</div>
+
+<!-- CATALOG -->
+<section class="section" id="catalog">
+  <div class="container">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-label">Наши работы</p>
+        <h2 class="sec-title">Каталог <em>мебели</em></h2>
+      </div>
+      <a href="#categories" class="sec-link">Все категории</a>
+    </div>
+
+    <div class="filter-tabs sr">
+      <div class="ftab active" onclick="filterTab(this,'all')">Все</div>
+      <div class="ftab" onclick="filterTab(this,'beds')">Кровати</div>
+      <div class="ftab" onclick="filterTab(this,'sofas')">Диваны</div>
+      <div class="ftab" onclick="filterTab(this,'chairs')">Кресла</div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+
+      <!-- Prod 1 -->
+      <div class="prod-card" data-cat="beds">
+        <div class="prod-img">
+          <div class="prod-img-inner">
+            <svg viewBox="0 0 300 220" width="260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="30" width="260" height="130" rx="6" fill="#3A5C4E"/>
+              <line x1="52" y1="30" x2="52" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <line x1="84" y1="30" x2="84" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <line x1="116" y1="30" x2="116" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <line x1="148" y1="30" x2="148" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <line x1="180" y1="30" x2="180" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <line x1="212" y1="30" x2="212" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <line x1="244" y1="30" x2="244" y2="160" stroke="#2D4A3E" stroke-width="1.5"/>
+              <rect x="20" y="162" width="260" height="36" rx="4" fill="#2D4A3E"/>
+              <rect x="38" y="168" width="74" height="24" rx="8" fill="#F5F2EE" opacity=".9"/>
+              <rect x="188" y="168" width="74" height="24" rx="8" fill="#EDE9E2" opacity=".85"/>
+              <rect x="20" y="157" width="260" height="3" fill="#C8A055" opacity=".5"/>
+              <rect x="36" y="198" width="8" height="16" rx="2" fill="#1C2E27"/>
+              <rect x="256" y="198" width="8" height="16" rx="2" fill="#1C2E27"/>
+            </svg>
+          </div>
+          <div class="prod-labels"><span class="prod-lbl lbl-hit">ХИТ</span></div>
+          <div class="prod-wish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-category">Кровать · Кастом</div>
+          <div class="prod-name">Arco Forest</div>
+          <div class="prod-colors">
+            <span class="color-dot" style="background:#3A5C4E" title="Forest"></span>
+            <span class="color-dot" style="background:#F5F2EE" title="Ivory"></span>
+            <span class="color-dot" style="background:#C8C4BE" title="Stone"></span>
+            <span class="color-dot" style="background:#8B7060" title="Mocha"></span>
+          </div>
+          <div class="prod-footer">
+            <div>
+              <div class="prod-price">180 000 ₸</div>
+              <div class="prod-price-old">212 000 ₸</div>
+            </div>
+            <button class="prod-add" onclick="addCart(this)">В корзину</button>
+          </div>
+          <div class="prod-installment">от 7 500 ₸/мес в рассрочку</div>
+        </div>
+      </div>
+
+      <!-- Prod 2 -->
+      <div class="prod-card" data-cat="beds">
+        <div class="prod-img">
+          <div class="prod-img-inner">
+            <svg viewBox="0 0 300 220" width="260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="30" width="260" height="130" rx="6" fill="#F5F2EE" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="52" y1="30" x2="52" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="84" y1="30" x2="84" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="116" y1="30" x2="116" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="148" y1="30" x2="148" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="180" y1="30" x2="180" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="212" y1="30" x2="212" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="244" y1="30" x2="244" y2="160" stroke="#D5CFC4" stroke-width="1"/>
+              <rect x="20" y="162" width="260" height="36" rx="4" fill="#EDE9E2"/>
+              <rect x="38" y="168" width="74" height="24" rx="8" fill="#FAFAF8" stroke="#E0DCD5" stroke-width=".5"/>
+              <rect x="188" y="168" width="74" height="24" rx="8" fill="#FAFAF8" stroke="#E0DCD5" stroke-width=".5"/>
+              <rect x="36" y="198" width="8" height="16" rx="2" fill="#C8C4BE"/>
+              <rect x="256" y="198" width="8" height="16" rx="2" fill="#C8C4BE"/>
+            </svg>
+          </div>
+          <div class="prod-labels"><span class="prod-lbl lbl-new">НОВИНКА</span></div>
+          <div class="prod-wish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-category">Кровать · Велюр</div>
+          <div class="prod-name">Arco Ivory</div>
+          <div class="prod-colors">
+            <span class="color-dot" style="background:#F5F2EE" title="Ivory"></span>
+            <span class="color-dot" style="background:#E8E4DE" title="Stone"></span>
+            <span class="color-dot" style="background:#D4C5B0" title="Latte"></span>
+          </div>
+          <div class="prod-footer">
+            <div>
+              <div class="prod-price">165 000 ₸</div>
+            </div>
+            <button class="prod-add" onclick="addCart(this)">В корзину</button>
+          </div>
+          <div class="prod-installment">от 6 875 ₸/мес в рассрочку</div>
+        </div>
+      </div>
+
+      <!-- Prod 3 — Sofa -->
+      <div class="prod-card" data-cat="sofas">
+        <div class="prod-img">
+          <div class="prod-img-inner">
+            <svg viewBox="0 0 300 220" width="260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="15" y="90" width="270" height="100" rx="12" fill="#3A5C4E"/>
+              <rect x="22" y="64" width="84" height="76" rx="8" fill="#456860"/>
+              <rect x="118" y="64" width="82" height="76" rx="8" fill="#456860"/>
+              <rect x="212" y="64" width="73" height="76" rx="8" fill="#456860"/>
+              <rect x="15" y="106" width="84" height="66" rx="6" fill="#4A7060"/>
+              <rect x="111" y="106" width="84" height="66" rx="6" fill="#4A7060"/>
+              <rect x="207" y="106" width="78" height="66" rx="6" fill="#4A7060"/>
+              <rect x="15" y="96" width="42" height="90" rx="8" fill="#3A5C4E"/>
+              <rect x="243" y="96" width="42" height="90" rx="8" fill="#3A5C4E"/>
+              <rect x="30" y="188" width="9" height="18" rx="2" fill="#1C2E27"/>
+              <rect x="261" y="188" width="9" height="18" rx="2" fill="#1C2E27"/>
+              <rect x="135" y="188" width="9" height="18" rx="2" fill="#1C2E27"/>
+            </svg>
+          </div>
+          <div class="prod-wish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-category">Диван · 3-местный</div>
+          <div class="prod-name">Sera Forest</div>
+          <div class="prod-colors">
+            <span class="color-dot" style="background:#3A5C4E"></span>
+            <span class="color-dot" style="background:#1A1A18"></span>
+            <span class="color-dot" style="background:#8B6B5A"></span>
+          </div>
+          <div class="prod-footer">
+            <div>
+              <div class="prod-price">240 000 ₸</div>
+            </div>
+            <button class="prod-add" onclick="addCart(this)">В корзину</button>
+          </div>
+          <div class="prod-installment">от 10 000 ₸/мес в рассрочку</div>
+        </div>
+      </div>
+
+      <!-- Prod 4 — Chair -->
+      <div class="prod-card" data-cat="chairs">
+        <div class="prod-img">
+          <div class="prod-img-inner">
+            <svg viewBox="0 0 300 220" width="240" xmlns="http://www.w3.org/2000/svg">
+              <rect x="80" y="40" width="140" height="120" rx="10" fill="#C8A055" opacity=".9"/>
+              <rect x="80" y="120" width="140" height="50" rx="8" fill="#B88A3A"/>
+              <rect x="76" y="80" width="22" height="90" rx="8" fill="#C8A055" opacity=".8"/>
+              <rect x="202" y="80" width="22" height="90" rx="8" fill="#C8A055" opacity=".8"/>
+              <rect x="54" y="40" width="20" height="110" rx="6" fill="#A8732A"/>
+              <rect x="50" y="148" width="9" height="40" rx="3" fill="#8B5E1A"/>
+              <rect x="241" y="148" width="9" height="40" rx="3" fill="#8B5E1A"/>
+              <rect x="110" y="148" width="9" height="40" rx="3" fill="#8B5E1A"/>
+              <rect x="181" y="148" width="9" height="40" rx="3" fill="#8B5E1A"/>
+            </svg>
+          </div>
+          <div class="prod-labels"><span class="prod-lbl lbl-new">НОВИНКА</span></div>
+          <div class="prod-wish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-category">Кресло · Кастом</div>
+          <div class="prod-name">Kira Gold</div>
+          <div class="prod-colors">
+            <span class="color-dot" style="background:#C8A055"></span>
+            <span class="color-dot" style="background:#8B7060"></span>
+            <span class="color-dot" style="background:#3A5C4E"></span>
+          </div>
+          <div class="prod-footer">
+            <div>
+              <div class="prod-price">95 000 ₸</div>
+            </div>
+            <button class="prod-add" onclick="addCart(this)">В корзину</button>
+          </div>
+          <div class="prod-installment">от 3 960 ₸/мес в рассрочку</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INSTALLMENT -->
+<section class="installment-section" id="installment">
+  <div class="container">
+    <div class="inst-grid">
+      <div class="inst-text sr">
+        <p class="sec-label">Рассрочка без %</p>
+        <h2 class="sec-title" style="color:#fff">Купите сейчас —<br><em>платите потом</em></h2>
+        <p>Оформляем рассрочку прямо в WhatsApp. Одобрение за 5 минут через ведущие банки Казахстана. Без переплат, без скрытых комиссий.</p>
+        <div class="inst-cards">
+          <div class="inst-card">
+            <div class="inst-card-num">0%</div>
+            <div class="inst-card-label">Переплата</div>
+          </div>
+          <div class="inst-card">
+            <div class="inst-card-num">24</div>
+            <div class="inst-card-label">Месяца макс.</div>
+          </div>
+          <div class="inst-card">
+            <div class="inst-card-num">5</div>
+            <div class="inst-card-label">Минут одобрение</div>
+          </div>
+          <div class="inst-card">
+            <div class="inst-card-num">3</div>
+            <div class="inst-card-label">Банка-партнёра</div>
+          </div>
+        </div>
+        <div class="inst-ctas" style="margin-top:32px">
+          <a href="https://wa.me/77XXXXXXXXX" class="btn-gold">Оформить рассрочку</a>
+          <a href="#contact" class="btn-trans">Узнать условия</a>
+        </div>
+      </div>
+      <div class="inst-visual sr d2">
+        <div class="bank-card">
+          <div class="bank-logo">KASPI</div>
+          <div>
+            <div class="bank-name">Каспи Банк</div>
+            <div class="bank-rate">до 24 мес · 0%</div>
+          </div>
+        </div>
+        <div class="bank-card">
+          <div class="bank-logo">ХАЛЫК</div>
+          <div>
+            <div class="bank-name">Халык Банк</div>
+            <div class="bank-rate">до 12 мес · 0%</div>
+          </div>
+        </div>
+        <div class="bank-card">
+          <div class="bank-logo">FREEDOM</div>
+          <div>
+            <div class="bank-name">Freedom Bank</div>
+            <div class="bank-rate">до 18 мес · 0%</div>
+          </div>
+        </div>
+        <div class="bank-card" style="background:rgba(200,160,85,.08);border-color:rgba(200,160,85,.2)">
+          <div class="bank-logo" style="color:var(--gold)">+ ЕЩЁ</div>
+          <div>
+            <div class="bank-name" style="color:#fff">Другие банки</div>
+            <div class="bank-rate">По запросу</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT METHODS -->
+<section class="payment-section" id="payment">
+  <div class="container">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-label">Удалённая оплата</p>
+        <h2 class="sec-title">Оплатите <em>онлайн</em><br>не выходя из дома</h2>
+      </div>
+    </div>
+    <div class="pay-methods">
+      <div class="pay-card sr">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <h3>Kaspi Pay / QR</h3>
+        <p>Самый быстрый способ. Переведите по номеру телефона или отсканируйте QR-код. Зачисление моментально.</p>
+        <span class="pay-tag">Моментально</span>
+      </div>
+      <div class="pay-card sr d1">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Visa / Mastercard</h3>
+        <p>Оплата картой через защищённую ссылку. Поддерживаются карты всех казахстанских и российских банков.</p>
+        <span class="pay-tag">SSL-защита</span>
+      </div>
+      <div class="pay-card sr d2">
+        <div class="pay-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Перевод по реквизитам</h3>
+        <p>Безналичная оплата по счёту для юридических лиц и ИП. Договор и счёт-фактура в день обращения.</p>
+        <span class="pay-tag">Для юр. лиц</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="container">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-label">Мебель для вашего дома</p>
+        <h2 class="sec-title">Категории <em>по мебели</em></h2>
+      </div>
+    </div>
+    <div class="cats-grid">
+      <!-- Big card — Beds -->
+      <div class="cat-card big sr">
+        <div class="cat-svg">
+          <svg viewBox="0 0 400 520" width="360" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="80" width="340" height="220" rx="8" fill="#4A7060"/>
+            <line x1="78" y1="80" x2="78" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <line x1="126" y1="80" x2="126" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <line x1="174" y1="80" x2="174" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <line x1="222" y1="80" x2="222" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <line x1="270" y1="80" x2="270" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <line x1="318" y1="80" x2="318" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <line x1="366" y1="80" x2="366" y2="300" stroke="#3A5C4E" stroke-width="2"/>
+            <rect x="30" y="302" width="340" height="110" rx="6" fill="#3A5C4E"/>
+            <rect x="56" y="314" width="120" height="56" rx="12" fill="#F5F2EE" opacity=".9"/>
+            <rect x="226" y="314" width="120" height="56" rx="12" fill="#EDE9E2" opacity=".85"/>
+            <rect x="30" y="293" width="340" height="6" fill="#C8A055" opacity=".6"/>
+            <rect x="54" y="412" width="14" height="36" rx="3" fill="#1C2E27"/>
+            <rect x="332" y="412" width="14" height="36" rx="3" fill="#1C2E27"/>
+          </svg>
+        </div>
+        <div class="cat-overlay">
+          <div class="cat-tag">Кастом</div>
+          <div class="cat-name">Кровати</div>
+          <div class="cat-count">18 моделей · Любой размер</div>
+          <a href="#catalog" class="cat-arrow">Смотреть</a>
+        </div>
+      </div>
+      <!-- Sofas -->
+      <div class="cat-card sr d1">
+        <div class="cat-svg">
+          <svg viewBox="0 0 320 280" width="290" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="110" width="296" height="120" rx="14" fill="#456860"/>
+            <rect x="22" y="80" width="92" height="84" rx="10" fill="#4A7060"/>
+            <rect x="126" y="80" width="86" height="84" rx="10" fill="#4A7060"/>
+            <rect x="224" y="80" width="84" height="84" rx="10" fill="#4A7060"/>
+            <rect x="12" y="126" width="50" height="96" rx="10" fill="#3A5C4E"/>
+            <rect x="258" y="126" width="50" height="96" rx="10" fill="#3A5C4E"/>
+            <rect x="34" y="222" width="11" height="26" rx="3" fill="#1C2E27"/>
+            <rect x="275" y="222" width="11" height="26" rx="3" fill="#1C2E27"/>
+          </svg>
+        </div>
+        <div class="cat-overlay">
+          <div class="cat-tag">На заказ</div>
+          <div class="cat-name">Диваны</div>
+          <div class="cat-count">12 моделей</div>
+          <a href="#catalog" class="cat-arrow">Смотреть</a>
+        </div>
+      </div>
+      <!-- Chairs -->
+      <div class="cat-card sr d2">
+        <div class="cat-svg">
+          <svg viewBox="0 0 320 280" width="220" xmlns="http://www.w3.org/2000/svg">
+            <rect x="100" y="40" width="120" height="110" rx="10" fill="#C8A055" opacity=".85"/>
+            <rect x="100" y="110" width="120" height="50" rx="8" fill="#B88A3A"/>
+            <rect x="96" y="76" width="20" height="82" rx="8" fill="#C8A055" opacity=".75"/>
+            <rect x="204" y="76" width="20" height="82" rx="8" fill="#C8A055" opacity=".75"/>
+            <rect x="108" y="158" width="9" height="40" rx="3" fill="#8B5E1A"/>
+            <rect x="203" y="158" width="9" height="40" rx="3" fill="#8B5E1A"/>
+          </svg>
+        </div>
+        <div class="cat-overlay">
+          <div class="cat-tag">Дизайнерские</div>
+          <div class="cat-name">Кресла</div>
+          <div class="cat-count">8 моделей</div>
+          <a href="#catalog" class="cat-arrow">Смотреть</a>
+        </div>
+      </div>
+      <!-- Sets -->
+      <div class="cat-card sr d3">
+        <div class="cat-svg">
+          <svg viewBox="0 0 320 280" width="280" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="50" width="180" height="130" rx="6" fill="#2D4A3E"/>
+            <line x1="38" y1="50" x2="38" y2="180" stroke="#1C2E27" stroke-width="1.5"/>
+            <line x1="66" y1="50" x2="66" y2="180" stroke="#1C2E27" stroke-width="1.5"/>
+            <line x1="94" y1="50" x2="94" y2="180" stroke="#1C2E27" stroke-width="1.5"/>
+            <line x1="122" y1="50" x2="122" y2="180" stroke="#1C2E27" stroke-width="1.5"/>
+            <line x1="150" y1="50" x2="150" y2="180" stroke="#1C2E27" stroke-width="1.5"/>
+            <line x1="178" y1="50" x2="178" y2="180" stroke="#1C2E27" stroke-width="1.5"/>
+            <rect x="10" y="182" width="180" height="56" rx="4" fill="#1C2E27"/>
+            <rect x="26" y="190" width="68" height="28" rx="7" fill="#F5F2EE" opacity=".8"/>
+            <rect x="106" y="190" width="68" height="28" rx="7" fill="#EDE9E2" opacity=".75"/>
+            <rect x="210" y="100" width="100" height="90" rx="8" fill="#C8A055" opacity=".7"/>
+            <rect x="210" y="96" width="30" height="100" rx="6" fill="#B88A3A" opacity=".8"/>
+            <rect x="214" y="188" width="7" height="30" rx="2" fill="#8B5E1A"/>
+            <rect x="296" y="188" width="7" height="30" rx="2" fill="#8B5E1A"/>
+          </svg>
+        </div>
+        <div class="cat-overlay">
+          <div class="cat-tag">Комплекты</div>
+          <div class="cat-name">Спальни</div>
+          <div class="cat-count">Гарнитуры под ключ</div>
+          <a href="#contact" class="cat-arrow">Заказать</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal-section" id="journal">
+  <div class="container">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-label">Советы и вдохновение</p>
+        <h2 class="sec-title">Журнал <em>о мебели</em></h2>
+      </div>
+      <a href="#" class="sec-link">Все статьи</a>
+    </div>
+    <div class="journal-grid sr">
+      <div class="art-card">
+        <div class="art-img" style="background:#2D4A3E">
+          <div class="art-img-inner">
+            <svg viewBox="0 0 480 280" width="420" xmlns="http://www.w3.org/2000/svg">
+              <rect x="40" y="50" width="400" height="160" rx="8" fill="#3A5C4E"/>
+              <line x1="88" y1="50" x2="88" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="136" y1="50" x2="136" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="184" y1="50" x2="184" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="232" y1="50" x2="232" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="280" y1="50" x2="280" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="328" y1="50" x2="328" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="376" y1="50" x2="376" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <line x1="424" y1="50" x2="424" y2="210" stroke="#2D4A3E" stroke-width="2"/>
+              <rect x="40" y="212" width="400" height="20" fill="#C8A055" opacity=".3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Тренды · 2026</div>
+          <div class="art-title">5 трендов мягкой мебели в 2026 году, которые делают интерьер дороже</div>
+          <div class="art-meta">15 марта 2026 · 7 мин чтения</div>
+        </div>
+      </div>
+      <div class="art-card">
+        <div class="art-img" style="background:#F5F2EE">
+          <div class="art-img-inner">
+            <svg viewBox="0 0 260 180" width="220" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="30" width="220" height="110" rx="6" fill="#E8E4DE"/>
+              <line x1="48" y1="30" x2="48" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="76" y1="30" x2="76" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="104" y1="30" x2="104" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="132" y1="30" x2="132" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="160" y1="30" x2="160" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="188" y1="30" x2="188" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <line x1="216" y1="30" x2="216" y2="140" stroke="#D5CFC4" stroke-width="1"/>
+              <rect x="20" y="142" width="220" height="28" rx="3" fill="#D5CFC4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Дизайн</div>
+          <div class="art-title">Как выбрать цвет кровати под интерьер</div>
+          <div class="art-meta">8 марта 2026 · 5 мин</div>
+        </div>
+      </div>
+      <div class="art-card">
+        <div class="art-img" style="background:#1C2E27">
+          <div class="art-img-inner">
+            <svg viewBox="0 0 260 180" width="200" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="70" width="240" height="90" rx="12" fill="#3A5C4E"/>
+              <rect x="18" y="48" width="78" height="68" rx="8" fill="#456860"/>
+              <rect x="108" y="48" width="76" height="68" rx="8" fill="#456860"/>
+              <rect x="196" y="48" width="54" height="68" rx="8" fill="#456860"/>
+              <rect x="10" y="84" width="36" height="72" rx="8" fill="#3A5C4E"/>
+              <rect x="214" y="84" width="36" height="72" rx="8" fill="#3A5C4E"/>
+            </svg>
+          </div>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Советы</div>
+          <div class="art-title">5 идей для маленькой гостиной: диван, который не ест пространство</div>
+          <div class="art-meta">1 марта 2026 · 4 мин</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-label">Нам доверяют</p>
+        <h2 class="sec-title">Отзывы <em>клиентов</em></h2>
+      </div>
+      <div style="font-size:13px;color:var(--gray)">★★★★★ 4.9 / 5 · 142 отзыва</div>
+    </div>
+    <div class="reviews-grid">
+      <div class="rev-card sr">
+        <div class="rev-stars">★★★★★</div>
+        <div class="rev-text">"Заказала кровать Arco в Ivory. Сделали за 18 дней, привезли и собрали. Ткань такая мягкая — руки не отрываются. Уже рекомендую всем подругам."</div>
+        <div class="rev-author">
+          <div class="rev-av">А</div>
+          <div><div class="rev-name">Айгерим Касымова</div><div class="rev-city">Актобе · Февраль 2026</div></div>
+        </div>
+      </div>
+      <div class="rev-card sr d1">
+        <div class="rev-stars">★★★★★</div>
+        <div class="rev-text">"Нестандартный диван 2.85м — нигде не могла найти. Здесь сделали идеально. Каждый день присылали фото с производства. Это очень приятно."</div>
+        <div class="rev-author">
+          <div class="rev-av">Д</div>
+          <div><div class="rev-name">Динара Мухамедова</div><div class="rev-city">Астана · Январь 2026</div></div>
+        </div>
+      </div>
+      <div class="rev-card sr d2">
+        <div class="rev-stars">★★★★★</div>
+        <div class="rev-text">"Брали в рассрочку через Каспи. Оформили за 10 минут прямо в чате. Кровать Forest — шикарная, муж тоже доволен. Спасибо команде!"</div>
+        <div class="rev-author">
+          <div class="rev-av">М</div>
+          <div><div class="rev-name">Мадина Сейткали</div><div class="rev-city">Алматы · Март 2026</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-bg"></div>
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-text sr">
+        <p class="sec-label">Начать заказ</p>
+        <h2 class="sec-title">Расскажите<br>о своей <em>комнате</em></h2>
+        <p>Пришлите фото интерьера — подберём идеальный вариант бесплатно. Работаем по всему Казахстану. Ответим в течение 15 минут.</p>
+        <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+          <a href="https://wa.me/77XXXXXXXXX" style="display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.5)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp: +7 (7XX) XXX-XX-XX
+          </a>
+          <div style="font-size:13px;color:rgba(255,255,255,0.5)">📍 Актобе, Казахстан</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.5)">📷 Instagram: @qamshy.made</div>
+        </div>
+      </div>
+      <div class="contact-form sr d2">
+        <div class="form-row">
+          <div class="form-field"><input type="text" placeholder="Ваше имя"></div>
+          <div class="form-field"><input type="tel" placeholder="WhatsApp номер"></div>
+        </div>
+        <div class="form-field">
+          <select>
+            <option value="" disabled selected>Что вас интересует?</option>
+            <option>Кровать под заказ</option>
+            <option>Диван под заказ</option>
+            <option>Кресло</option>
+            <option>Спальный гарнитур</option>
+            <option>Рассрочка</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="form-field"><input type="text" placeholder="Размер / цвет / пожелания (необязательно)"></div>
+        <button class="form-submit" onclick="submitForm()">Отправить заявку →</button>
+        <p class="form-note">Ответим в WhatsApp в течение 15 минут</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <span class="nav-logo">Qamshy <span style="color:var(--gold)">Made</span></span>
+        <p>Кастом мягкая мебель ручной работы. Кровати, диваны, кресла под ваш интерьер. Производство в Актобе.</p>
+        <div class="footer-contacts">
+          <a href="https://wa.me/77XXXXXXXXX">WhatsApp: +7 (7XX) XXX-XX-XX</a>
+          <a href="#">Instagram: @qamshy.made</a>
+          <a href="#">Актобе, Казахстан</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Каталог</h5>
+        <ul>
+          <li><a href="#">Кровати</a></li>
+          <li><a href="#">Диваны</a></li>
+          <li><a href="#">Кресла</a></li>
+          <li><a href="#">Спальни</a></li>
+          <li><a href="#">Новинки</a></li>
+          <li><a href="#">Акции</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Покупателю</h5>
+        <ul>
+          <li><a href="#installment">Рассрочка 0%</a></li>
+          <li><a href="#payment">Онлайн-оплата</a></li>
+          <li><a href="#">Доставка</a></li>
+          <li><a href="#">Гарантия</a></li>
+          <li><a href="#">Статус заказа</a></li>
+          <li><a href="#">Возврат</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Компания</h5>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#journal">Журнал</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#contact">Контакты</a></li>
+          <li><a href="#">Для бизнеса</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Qamshy Made · ИП · Актобе, Казахстан · Все права защищены</p>
+      <div class="footer-socials">
+        <a class="soc-btn" href="#">IG</a>
+        <a class="soc-btn" href="#">WA</a>
+        <a class="soc-btn" href="#">TG</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp float -->
+<a href="https://wa.me/77718431358" class="wa-float" target="_blank" title="Написать в WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<style>
+/* ── CART DRAWER ── */
+.cart-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{
+  position:fixed;top:0;right:0;width:420px;max-width:100vw;height:100vh;
+  background:#fff;z-index:501;
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 28px;border-bottom:1px solid var(--stone);flex-shrink:0;
+}
+.cart-head h3{font-family:var(--serif);font-size:22px;font-weight:400}
+.cart-close{font-size:22px;cursor:pointer;color:var(--lgray);line-height:1;background:none;border:none}
+.cart-close:hover{color:var(--dark)}
+.cart-items{flex:1;overflow-y:auto;padding:20px 28px}
+.cart-empty{text-align:center;padding:60px 0;color:var(--lgray);font-size:14px}
+.cart-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:16px 0;border-bottom:1px solid var(--stone);
+}
+.cart-item:last-child{border-bottom:none}
+.cart-item-img{
+  width:72px;height:60px;background:var(--ivory);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:14px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.cart-item-cat{font-size:11px;color:var(--lgray);letter-spacing:0.5px;margin-bottom:8px}
+.cart-item-price{font-family:var(--serif);font-size:16px;color:var(--forest)}
+.cart-item-qty{
+  display:flex;align-items:center;gap:8px;margin-top:8px;
+}
+.qty-btn{
+  width:26px;height:26px;border:1.5px solid var(--stone);background:none;
+  font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.qty-btn:hover{background:var(--stone)}
+.qty-val{font-size:13px;min-width:20px;text-align:center}
+.cart-remove{font-size:10px;color:var(--lgray);cursor:pointer;margin-left:auto;text-transform:uppercase;letter-spacing:1px;background:none;border:none}
+.cart-remove:hover{color:var(--red)}
+.cart-footer{
+  padding:24px 28px;border-top:1px solid var(--stone);flex-shrink:0;
+  background:#fff;
+}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cart-total-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gray)}
+.cart-total-val{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--forest)}
+.cart-btn-order{
+  width:100%;background:var(--forest);color:#fff;
+  padding:16px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);cursor:pointer;border:none;transition:background .2s;
+}
+.cart-btn-order:hover{background:var(--dark)}
+.cart-installment{font-size:11px;color:var(--lgray);text-align:center;margin-top:8px}
+
+/* ── ORDER MODAL ── */
+.order-overlay{
+  position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.5);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;padding:20px;
+}
+.order-overlay.open{opacity:1;pointer-events:all}
+.order-modal{
+  background:#fff;width:100%;max-width:540px;padding:40px;
+  max-height:90vh;overflow-y:auto;position:relative;
+}
+.order-modal h3{font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:6px}
+.order-modal .om-sub{font-size:13px;color:var(--gray);margin-bottom:28px}
+.om-close{position:absolute;top:16px;right:16px;width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:var(--lgray);font-size:20px;background:none;border:none}
+.om-close:hover{color:var(--dark)}
+.om-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.om-field label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);font-weight:600}
+.om-field input,.om-field select,.om-field textarea{
+  border:1.5px solid var(--stone);padding:12px 14px;font-size:14px;
+  outline:none;transition:border-color .2s;font-family:var(--sans);width:100%;
+}
+.om-field input:focus,.om-field select:focus,.om-field textarea:focus{border-color:var(--forest)}
+.om-field textarea{resize:vertical;min-height:70px}
+.om-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.om-summary{background:var(--ivory);padding:16px;margin-bottom:20px}
+.om-summary-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lgray);margin-bottom:10px;font-weight:600}
+.om-summary-item{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.om-summary-total{display:flex;justify-content:space-between;font-size:15px;font-weight:600;color:var(--forest);border-top:1px solid var(--stone);padding-top:8px;margin-top:8px}
+.om-kaspi-note{
+  background:#FFF7ED;border-left:3px solid #F59E0B;
+  padding:12px 16px;margin-bottom:16px;font-size:12px;color:#92400E;line-height:1.7;
+}
+.om-submit{
+  width:100%;background:var(--forest);color:#fff;padding:16px;
+  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  font-family:var(--sans);cursor:pointer;border:none;transition:background .2s;
+}
+.om-submit:hover{background:var(--dark)}
+.om-submit:disabled{background:var(--lgray);cursor:not-allowed}
+
+/* ── TOAST ── */
+.site-toast{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(16px);
+  background:var(--dark);color:#fff;padding:12px 24px;font-size:13px;font-weight:500;
+  z-index:9000;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none;
+}
+.site-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Корзина</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Итого</span>
+      <span class="cart-total-val" id="cartTotalVal">0 ₸</span>
+    </div>
+    <button class="cart-btn-order" onclick="openOrderModal()">Оформить заказ →</button>
+    <div class="cart-installment">или рассрочка 0% — от <span id="installmentVal">—</span>/мес</div>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="order-overlay" id="orderOverlay">
+  <div class="order-modal">
+    <button class="om-close" onclick="closeOrderModal()">✕</button>
+    <h3>Оформление заказа</h3>
+    <p class="om-sub">Заполните данные — ответим в WhatsApp в течение 15 минут</p>
+    <div id="omSummary"></div>
+    <div class="om-row">
+      <div class="om-field"><label>Ваше имя *</label><input type="text" id="om_name" placeholder="Айгерим"></div>
+      <div class="om-field"><label>WhatsApp *</label><input type="tel" id="om_phone" placeholder="+7 701 ..."></div>
+    </div>
+    <div class="om-row">
+      <div class="om-field"><label>Город</label><input type="text" id="om_city" placeholder="Актобе"></div>
+      <div class="om-field"><label>Способ доставки</label>
+        <select id="om_delivery">
+          <option value="pickup">Самовывоз (Актобе)</option>
+          <option value="courier">Курьер по городу</option>
+          <option value="cdek">СДЭК / Казпочта</option>
+        </select>
+      </div>
+    </div>
+    <div class="om-field"><label>Адрес доставки</label><input type="text" id="om_address" placeholder="Улица, дом, квартира"></div>
+    <div class="om-field"><label>Способ оплаты</label>
+      <select id="om_payment" onchange="toggleKaspiNote()">
+        <option value="kaspi">💳 Kaspi Pay</option>
+        <option value="installment">Рассрочка 0%</option>
+        <option value="card">Банковская карта</option>
+      </select>
+    </div>
+    <div class="om-kaspi-note" id="kaspiNote">
+      После подтверждения заказа мы пришлём реквизиты Kaspi для оплаты в WhatsApp.
+    </div>
+    <div class="om-field"><label>Комментарий (цвет, размер, пожелания)</label>
+      <textarea id="om_comment" placeholder="Велюр серый, размер 160×200..."></textarea>
+    </div>
+    <button class="om-submit" id="omSubmitBtn" onclick="submitOrder()">Подтвердить заказ →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="site-toast" id="siteToast"></div>
+
+<script>
+// ================================================================
+// ⚠️  ЗАМЕНИТЕ НА СВОИ ДАННЫЕ SUPABASE
+// Получить: supabase.com → Project Settings → API
+// ================================================================
+const SUPABASE_URL = 'https://cimwdsjagnzqgvqvhcan.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpbXdkc2phZ256cWd2cXZoY2FuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDkzNjMsImV4cCI6MjA5MDEyNTM2M30.jczq0BnsnLYOSguN2vW2amQnGl4BNgOR4D2uF6PEZtg';
+// Ваш WhatsApp номер (только цифры, например 77012345678)
+const WA_NUMBER = '77718431358';
+// Kaspi номер для реквизитов
+const KASPI_PHONE = '+7 (771) 843-13-58';
+// ================================================================
+
+// ── Supabase lite client ──
+const sb = {
+  h: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+  async get(table, opts='') {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${opts}`, { headers: this.h });
+      return r.ok ? r.json() : [];
+    } catch { return []; }
+  },
+  async insert(table, data) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method:'POST', headers:{...this.h,'Prefer':'return=representation'}, body:JSON.stringify(data)
+    });
+    if (!r.ok) throw await r.json();
+    return r.json();
+  }
+};
+
+// ── Cart state ──
+let cart = JSON.parse(localStorage.getItem('qm_cart') || '[]');
+let allProducts = [];
+
+function saveCart() { localStorage.setItem('qm_cart', JSON.stringify(cart)); }
+function cartTotal() { return cart.reduce((s,i) => s + i.price * i.qty, 0); }
+function cartQty()   { return cart.reduce((s,i) => s + i.qty, 0); }
+
+// ── Render cart ──
+function renderCart() {
+  const items = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  const badge = document.querySelector('.badge');
+  const qty = cartQty();
+  badge.textContent = qty;
+  badge.style.display = qty > 0 ? 'flex' : 'none';
+
+  if (cart.length === 0) {
+    items.innerHTML = '<div class="cart-empty">🛒<br><br>Корзина пуста</div>';
+    footer.style.display = 'none';
+    return;
+  }
+  footer.style.display = 'block';
+  items.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-img">${item.emoji || '🛋️'}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-cat">${catLabel(item.cat)}</div>
+        <div class="cart-item-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₸</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${idx}, -1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+          <button class="cart-remove" onclick="removeFromCart(${idx})">Удалить</button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const total = cartTotal();
+  document.getElementById('cartTotalVal').textContent = total.toLocaleString('ru-RU') + ' ₸';
+  document.getElementById('installmentVal').textContent = Math.round(total/24).toLocaleString('ru-RU') + ' ₸';
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  saveCart(); renderCart();
+}
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  saveCart(); renderCart();
+  showToast('Товар удалён из корзины');
+}
+
+// ── Add to cart ──
+window.addCart = function(btn, productData) {
+  let product;
+  if (productData) {
+    product = productData;
+  } else {
+    // Static product cards — read data from closest card
+    const card = btn.closest('.prod-card');
+    const name = card.querySelector('.prod-name')?.textContent || 'Товар';
+    const priceText = card.querySelector('.prod-price')?.textContent || '0';
+    const price = parseInt(priceText.replace(/\D/g, '')) || 0;
+    const cat = card.dataset.cat || '';
+    product = { id: name, name, price, cat, qty: 1, emoji: catEmoji(cat) };
+  }
+  const existing = cart.find(i => i.id === product.id);
+  if (existing) { existing.qty++; }
+  else { cart.push({ ...product, qty: 1 }); }
+  saveCart(); renderCart();
+  btn.textContent = 'Добавлено ✓';
+  btn.style.background = 'var(--dark)';
+  setTimeout(() => { btn.textContent = 'В корзину'; btn.style.background = 'var(--forest)'; }, 2000);
+  showToast('Товар добавлен в корзину');
+};
+
+// ── Open/close cart ──
+function openCart() {
+  renderCart();
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Cart icon click ──
+document.querySelector('.nav-cart-badge').addEventListener('click', openCart);
+
+// ── Order modal ──
+function openOrderModal() {
+  closeCart();
+  // Build summary
+  const summary = document.getElementById('omSummary');
+  summary.innerHTML = `
+    <div class="om-summary">
+      <div class="om-summary-title">Состав заказа</div>
+      ${cart.map(i=>`<div class="om-summary-item"><span>${i.name} × ${i.qty}</span><span>${(i.price*i.qty).toLocaleString('ru-RU')} ₸</span></div>`).join('')}
+      <div class="om-summary-total"><span>Итого</span><span>${cartTotal().toLocaleString('ru-RU')} ₸</span></div>
+    </div>`;
+  document.getElementById('orderOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeOrderModal() {
+  document.getElementById('orderOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function toggleKaspiNote() {
+  const v = document.getElementById('om_payment').value;
+  document.getElementById('kaspiNote').style.display = v === 'kaspi' ? 'block' : 'none';
+}
+
+// ── Submit order ──
+window.submitOrder = async function() {
+  const name  = document.getElementById('om_name').value.trim();
+  const phone = document.getElementById('om_phone').value.trim();
+  if (!name || !phone) { showToast('Заполните имя и телефон'); return; }
+  if (cart.length === 0) { showToast('Корзина пуста'); return; }
+
+  const btn = document.getElementById('omSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Отправляем...';
+
+  const orderNum = 'QM-' + Date.now().toString().slice(-6);
+  const orderData = {
+    order_num:  orderNum,
+    user_name:  name,
+    phone:      phone,
+    city:       document.getElementById('om_city').value.trim(),
+    address:    document.getElementById('om_address').value.trim(),
+    delivery:   document.getElementById('om_delivery').value,
+    payment:    document.getElementById('om_payment').value,
+    comment:    document.getElementById('om_comment').value.trim(),
+    items:      cart.map(i => ({ name: i.name, price: i.price, qty: i.qty })),
+    total:      cartTotal(),
+    status:     'new',
+    created_at: new Date().toISOString()
+  };
+
+  let success = false;
+  if (!SUPABASE_URL.includes('YOUR_PROJECT')) {
+    try {
+      await sb.insert('orders', orderData);
+      success = true;
+    } catch(e) {
+      console.warn('Supabase error:', e);
+    }
+  } else {
+    // Demo mode — just simulate
+    success = true;
+  }
+
+  if (success) {
+    // Send WhatsApp message
+    const items = cart.map(i=>`• ${i.name} × ${i.qty} = ${(i.price*i.qty).toLocaleString('ru-RU')} ₸`).join('%0A');
+    const msg = `Новый заказ ${orderNum}%0A%0AКлиент: ${name}%0AТелефон: ${phone}%0AГород: ${orderData.city||'—'}%0AДоставка: ${deliveryLabel(orderData.delivery)}%0AОплата: ${paymentLabel(orderData.payment)}%0A%0AТовары:%0A${items}%0A%0AИтого: ${cartTotal().toLocaleString('ru-RU')} ₸%0A%0AКомментарий: ${orderData.comment||'—'}`;
+
+    cart = []; saveCart(); renderCart();
+    closeOrderModal();
+    showToast('Заказ №' + orderNum + ' оформлен! Открываем WhatsApp...');
+
+    setTimeout(() => {
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }, 800);
+  } else {
+    showToast('Ошибка. Попробуйте ещё раз или напишите в WhatsApp');
+  }
+  btn.disabled = false; btn.textContent = 'Подтвердить заказ →';
+};
+
+// ── Load products from Supabase ──
+async function loadProducts() {
+  if (SUPABASE_URL.includes('YOUR_PROJECT')) return; // demo mode, keep static
+  const products = await sb.get('products', 'in_stock=eq.true&order=created_at.desc');
+  if (!products || products.length === 0) return;
+  allProducts = products;
+  renderProductGrid(products);
+}
+
+function renderProductGrid(products) {
+  const grid = document.getElementById('productsGrid');
+  if (!grid || products.length === 0) return;
+  grid.innerHTML = products.map(p => `
+    <div class="prod-card" data-cat="${p.cat||''}">
+      <div class="prod-img">
+        <div class="prod-img-inner">
+          ${p.img
+            ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">`
+            : `<div style="font-size:64px;opacity:.3">${catEmoji(p.cat)}</div>`}
+        </div>
+        ${p.label ? `<div class="prod-labels"><span class="prod-lbl lbl-${p.label}">${labelText(p.label)}</span></div>` : ''}
+        <div class="prod-wish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-category">${catLabel(p.cat)}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-footer">
+          <div>
+            <div class="prod-price">${(p.price||0).toLocaleString('ru-RU')} ₸</div>
+            ${p.old_price ? `<div class="prod-price-old">${p.old_price.toLocaleString('ru-RU')} ₸</div>` : ''}
+          </div>
+          <button class="prod-add" onclick="addCart(this, {id:'${p.id}',name:'${p.name.replace(/'/g,"\\'")}',price:${p.price||0},cat:'${p.cat||''}',emoji:'${catEmoji(p.cat)}'})">В корзину</button>
+        </div>
+        ${p.price ? `<div class="prod-installment">от ${Math.round(p.price/24).toLocaleString('ru-RU')} ₸/мес в рассрочку</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+// ── Contact form (saves to Supabase too) ──
+window.submitForm = async function() {
+  const inputs = document.querySelectorAll('.contact-form input, .contact-form select');
+  const name  = inputs[0]?.value.trim();
+  const phone = inputs[1]?.value.trim();
+  const interest = inputs[2]?.value || '';
+  const comment  = inputs[3]?.value.trim() || '';
+  if (!name || !phone) { showToast('Введите имя и телефон'); return; }
+
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Отправляем...';
+
+  if (!SUPABASE_URL.includes('YOUR_PROJECT')) {
+    try {
+      await sb.insert('leads', {
+        name, phone, interest, comment, created_at: new Date().toISOString()
+      });
+    } catch(e) { console.warn(e); }
+  }
+
+  const msg = `Заявка с сайта%0AИмя: ${name}%0AТелефон: ${phone}%0AИнтерес: ${interest||'—'}%0AКомментарий: ${comment||'—'}`;
+  btn.textContent = 'Отправлено! Ждите ответа ✓';
+  btn.style.background = '#3A5C4E'; btn.style.color = '#fff';
+  setTimeout(() => {
+    btn.textContent = 'Отправить заявку →';
+    btn.style.background = 'var(--gold)'; btn.style.color = 'var(--dark)';
+  }, 3500);
+  setTimeout(() => window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank'), 500);
+};
+
+// ── Helpers ──
+function catLabel(c) { return {beds:'Кровать',sofas:'Диван',chairs:'Кресло',sets:'Гарнитур'}[c]||c||''; }
+function catEmoji(c) { return {beds:'🛏️',sofas:'🛋️',chairs:'💺',sets:'🏠'}[c]||'🛋️'; }
+function labelText(l){ return {new:'НОВИНКА',hit:'ХИТ',sale:'СКИДКА'}[l]||l.toUpperCase(); }
+function paymentLabel(p){ return {kaspi:'Kaspi Pay',card:'Карта',installment:'Рассрочка'}[p]||p||''; }
+function deliveryLabel(d){ return {courier:'Курьер',cdek:'СДЭК/Казпочта',pickup:'Самовывоз'}[d]||d||''; }
+
+function showToast(msg) {
+  const t = document.getElementById('siteToast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── Burger menu ──
+function toggleMenu(){
+  const menu=document.getElementById('mobMenu');
+  const burger=document.querySelector('.burger');
+  menu.classList.toggle('open');
+  burger.classList.toggle('open');
+  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  const menu=document.getElementById('mobMenu');
+  const burger=document.querySelector('.burger');
+  menu.classList.remove('open');
+  burger.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ── Scroll reveal ──
+const sr=document.querySelectorAll('.sr');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:0.1});
+sr.forEach(el=>obs.observe(el));
+
+// ── Filter tabs ──
+function filterTab(el,cat){
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.prod-card').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
+  });
+}
+function filterProducts(cat){
+  document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    document.querySelectorAll('.ftab').forEach((t,i)=>{
+      const map=['all','beds','sofas','chairs'];
+      t.classList.toggle('active',map[i]===cat);
+    });
+    document.querySelectorAll('.prod-card').forEach(c=>{
+      c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
+    });
+  },600);
+}
+
+// ── Sticky nav ──
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.boxShadow=
+    window.scrollY>10?'0 2px 20px rgba(0,0,0,0.08)':'none';
+});
+
+
+// ── AUTH MODULE ──
+let currentUser = null;
+
+// Extended Supabase client with auth methods
+const sbAuth = {
+  async signUp(email, password, meta) {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, data: meta })
+    });
+    const d = await r.json();
+    if (!r.ok) throw d;
+    return d;
+  },
+  async signIn(email, password) {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const d = await r.json();
+    if (!r.ok) throw d;
+    return d;
+  },
+  async signOut(token) {
+    await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` }
+    });
+  },
+  async getUser(token) {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` }
+    });
+    return r.ok ? r.json() : null;
+  }
+};
+
+// ── Auth modal open/close ──
+function openAuthModal() {
+  if (currentUser) {
+    showProfileView();
+  } else {
+    switchAuthTab('login');
+  }
+  document.getElementById('authOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAuthModal(e) {
+  if (e && e.target !== document.getElementById('authOverlay')) return;
+  document.getElementById('authOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register')));
+  document.getElementById('authLogin').style.display = tab==='login' ? 'block' : 'none';
+  document.getElementById('authRegister').style.display = tab==='register' ? 'block' : 'none';
+  document.getElementById('authProfile').style.display = 'none';
+}
+
+// ── Login ──
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  errEl.classList.remove('show');
+  if (!email || !pass) { errEl.textContent='Заполните все поля'; errEl.classList.add('show'); return; }
+  if (SUPABASE_URL.includes('YOUR_PROJECT')) { showToast('Настройте Supabase для работы авторизации'); return; }
+  try {
+    const data = await sbAuth.signIn(email, pass);
+    saveSession(data);
+    setCurrentUser(data.user, data.user.user_metadata);
+    closeAuthModal(null);
+    showToast('Добро пожаловать!');
+  } catch(e) {
+    errEl.textContent = e.error_description || e.msg || 'Неверный email или пароль';
+    errEl.classList.add('show');
+  }
+}
+
+// ── Register ──
+async function doRegister() {
+  const name  = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass  = document.getElementById('regPass').value;
+  const errEl = document.getElementById('regError');
+  errEl.classList.remove('show');
+  if (!name || !email || !pass) { errEl.textContent='Заполните обязательные поля'; errEl.classList.add('show'); return; }
+  if (pass.length < 6) { errEl.textContent='Пароль минимум 6 символов'; errEl.classList.add('show'); return; }
+  if (SUPABASE_URL.includes('YOUR_PROJECT')) { showToast('Настройте Supabase для работы авторизации'); return; }
+  try {
+    const data = await sbAuth.signUp(email, pass, { full_name: name, phone });
+    if (data.access_token) {
+      saveSession(data);
+      setCurrentUser(data.user, { full_name: name, phone });
+      closeAuthModal(null);
+      showToast('Аккаунт создан! Добро пожаловать, ' + name + '!');
+      // Also insert profile
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
+          method:'POST',
+          headers:{...sb.h,'Prefer':'return=minimal','Authorization':`Bearer ${data.access_token}`},
+          body:JSON.stringify({ id:data.user.id, full_name:name, phone, email })
+        });
+      } catch(e2) { console.warn('Profile insert:', e2); }
+    } else {
+      // Email confirmation required
+      closeAuthModal(null);
+      showToast('Проверьте email для подтверждения аккаунта');
+    }
+  } catch(e) {
+    errEl.textContent = e.msg || e.message || 'Ошибка регистрации. Попробуйте другой email';
+    errEl.classList.add('show');
+  }
+}
+
+// ── Logout ──
+async function doLogout() {
+  const session = getSession();
+  if (session) { try { await sbAuth.signOut(session.access_token); } catch(e){} }
+  clearSession();
+  currentUser = null;
+  updateAuthNav(null);
+  closeAuthModal(null);
+  showToast('Вы вышли из аккаунта');
+}
+
+// ── Profile view ──
+function showProfileView() {
+  document.getElementById('authLogin').style.display = 'none';
+  document.getElementById('authRegister').style.display = 'none';
+  document.getElementById('authProfile').style.display = 'block';
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  if (currentUser) {
+    const name = currentUser.meta?.full_name || currentUser.email?.split('@')[0] || 'Пользователь';
+    document.getElementById('profileAvatar').textContent = name[0].toUpperCase();
+    document.getElementById('profileName').textContent = name;
+    document.getElementById('profileEmail').textContent = currentUser.email || '';
+    document.getElementById('profileCartCount').textContent = cartQty();
+  }
+}
+
+// ── Session persistence (localStorage) ──
+function saveSession(data) {
+  localStorage.setItem('qm_session', JSON.stringify({ access_token: data.access_token, user: data.user }));
+}
+function getSession() {
+  try { return JSON.parse(localStorage.getItem('qm_session') || 'null'); } catch { return null; }
+}
+function clearSession() { localStorage.removeItem('qm_session'); }
+
+function setCurrentUser(user, meta) {
+  currentUser = { ...user, meta };
+  updateAuthNav(currentUser);
+}
+
+function updateAuthNav(user) {
+  const label = document.getElementById('authNavLabel');
+  if (!label) return;
+  if (user) {
+    const name = user.meta?.full_name || user.email?.split('@')[0] || 'Аккаунт';
+    label.textContent = name.split(' ')[0];
+  } else {
+    label.textContent = 'Войти';
+  }
+}
+
+// ── Auto-fill order form if logged in ──
+const _origOpenOrderModal = openOrderModal;
+window.openOrderModal = function() {
+  _origOpenOrderModal();
+  if (currentUser) {
+    const nameEl = document.getElementById('om_name');
+    const phoneEl = document.getElementById('om_phone');
+    if (nameEl && !nameEl.value) nameEl.value = currentUser.meta?.full_name || '';
+    if (phoneEl && !phoneEl.value) phoneEl.value = currentUser.meta?.phone || '';
+  }
+};
+
+// ── Restore session on page load ──
+(async function restoreSession() {
+  const session = getSession();
+  if (!session || !session.access_token || SUPABASE_URL.includes('YOUR_PROJECT')) return;
+  try {
+    const user = await sbAuth.getUser(session.access_token);
+    if (user && user.id) {
+      setCurrentUser(user, user.user_metadata || {});
+    } else {
+      clearSession();
+    }
+  } catch(e) {
+    clearSession();
+  }
+})();
+
+// ── Init ──
+renderCart();
+loadProducts();
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
+  <div class="auth-modal" id="authModal">
+    <button class="om-close" onclick="closeAuthModal(null)" style="position:absolute;top:16px;right:16px">✕</button>
+    <div class="auth-logo">Qamshy <span>Made</span></div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs" id="authTabs">
+      <div class="auth-tab active" onclick="switchAuthTab('login')">Войти</div>
+      <div class="auth-tab" onclick="switchAuthTab('register')">Регистрация</div>
+    </div>
+
+    <!-- Login form -->
+    <div id="authLogin">
+      <div class="om-field"><label>Email</label><input type="email" id="loginEmail" placeholder="example@mail.com"></div>
+      <div class="om-field"><label>Пароль</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+      <div class="auth-error" id="loginError"></div>
+      <button class="om-submit" onclick="doLogin()">Войти →</button>
+      <p class="auth-switch">Нет аккаунта? <span onclick="switchAuthTab('register')">Зарегистрироваться</span></p>
+    </div>
+
+    <!-- Register form -->
+    <div id="authRegister" style="display:none">
+      <div class="om-field"><label>Имя</label><input type="text" id="regName" placeholder="Айгерим"></div>
+      <div class="om-field"><label>Телефон WhatsApp</label><input type="tel" id="regPhone" placeholder="+7 701 ..."></div>
+      <div class="om-field"><label>Email</label><input type="email" id="regEmail" placeholder="example@mail.com"></div>
+      <div class="om-field"><label>Пароль</label><input type="password" id="regPass" placeholder="Минимум 6 символов"></div>
+      <div class="auth-error" id="regError"></div>
+      <button class="om-submit" onclick="doRegister()">Создать аккаунт →</button>
+      <p class="auth-switch">Уже есть аккаунт? <span onclick="switchAuthTab('login')">Войти</span></p>
+    </div>
+
+    <!-- Profile (shown when logged in) -->
+    <div id="authProfile" style="display:none">
+      <div class="auth-profile-avatar" id="profileAvatar">А</div>
+      <div class="auth-profile-name" id="profileName">Пользователь</div>
+      <div class="auth-profile-email" id="profileEmail"></div>
+      <div class="auth-profile-stats">
+        <div class="auth-stat">
+          <div class="auth-stat-num" id="profileOrderCount">—</div>
+          <div class="auth-stat-label">Заказов</div>
+        </div>
+        <div class="auth-stat">
+          <div class="auth-stat-num" id="profileCartCount">—</div>
+          <div class="auth-stat-label">В корзине</div>
+        </div>
+      </div>
+      <button class="om-submit" onclick="doLogout()" style="background:#D44">Выйти из аккаунта</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── AUTH MODAL ── */
+.auth-overlay{
+  position:fixed;inset:0;z-index:700;background:rgba(0,0,0,0.55);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.auth-overlay.open{opacity:1;pointer-events:all}
+.auth-modal{
+  background:#fff;width:100%;max-width:400px;padding:40px;
+  position:relative;
+}
+.auth-logo{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  text-align:center;margin-bottom:24px;
+}
+.auth-logo span{color:var(--forest)}
+.auth-tabs{display:flex;border-bottom:1px solid var(--stone);margin-bottom:24px}
+.auth-tab{
+  flex:1;text-align:center;padding:10px;
+  font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:var(--lgray);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s,border-color .2s;
+}
+.auth-tab.active{color:var(--forest);border-bottom-color:var(--forest)}
+.auth-error{
+  font-size:12px;color:#D44;background:#FFF0F0;
+  padding:10px 14px;margin-bottom:14px;display:none;
+  border-left:3px solid #D44;
+}
+.auth-error.show{display:block}
+.auth-switch{
+  font-size:12px;color:var(--gray);text-align:center;margin-top:16px;
+}
+.auth-switch span{color:var(--forest);cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+/* Profile view */
+.auth-profile-avatar{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--forest);color:#fff;
+  font-family:var(--serif);font-size:28px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+}
+.auth-profile-name{font-family:var(--serif);font-size:20px;font-weight:400;text-align:center;margin-bottom:4px}
+.auth-profile-email{font-size:12px;color:var(--lgray);text-align:center;margin-bottom:24px}
+.auth-profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:24px}
+.auth-stat{background:var(--ivory);padding:20px;text-align:center}
+.auth-stat-num{font-family:var(--serif);font-size:28px;color:var(--forest);font-weight:400}
+.auth-stat-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--lgray);margin-top:4px}
+</style>
+
+</body>
+</html>

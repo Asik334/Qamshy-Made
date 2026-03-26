@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qamshy Made — Админ панель</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F4F4F2;
+  --white:#fff;
+  --forest:#2B4A3C;
+  --forest2:#3A5C4E;
+  --gold:#C8A055;
+  --dark:#18181A;
+  --gray:#6B6B68;
+  --lgray:#9A9A96;
+  --stone:#E8E4DE;
+  --ivory:#F5F2EE;
+  --red:#cc3333;
+  --green:#2e7d5c;
+  --blue:#2563EB;
+  --serif:'Playfair Display',serif;
+  --sans:'Mulish',sans-serif;
+  --sidebar:240px;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--dark);font-weight:300;min-height:100vh;display:flex}
+a{text-decoration:none;color:inherit}
+button{border:none;cursor:pointer;font-family:var(--sans)}
+input,select,textarea{font-family:var(--sans)}
+
+/* ── AUTH GATE ── */
+#authGate{
+  position:fixed;inset:0;background:var(--forest);
+  display:flex;align-items:center;justify-content:center;z-index:9999;
+}
+.auth-box{background:var(--white);padding:48px 40px;width:100%;max-width:380px;text-align:center}
+.auth-box h1{font-family:var(--serif);font-size:28px;font-weight:400;margin-bottom:4px}
+.auth-box p{font-size:13px;color:var(--gray);margin-bottom:28px}
+.auth-field{margin-bottom:14px;text-align:left}
+.auth-field label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:6px;font-weight:600}
+.auth-field input{width:100%;border:1.5px solid var(--stone);padding:12px 14px;font-size:14px;outline:none;transition:border-color .2s}
+.auth-field input:focus{border-color:var(--forest)}
+.auth-btn{width:100%;background:var(--forest);color:#fff;padding:15px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-top:6px;transition:background .2s}
+.auth-btn:hover{background:var(--dark)}
+.auth-err{font-size:12px;color:var(--red);margin-top:8px;display:none;text-align:left}
+.auth-logo{font-family:var(--serif);font-size:22px;color:var(--forest);margin-bottom:20px;display:block}
+.auth-logo span{color:var(--gold)}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  background:var(--forest);
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-logo{
+  padding:28px 24px 24px;
+  font-family:var(--serif);font-size:20px;color:#fff;font-weight:400;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.sidebar-logo span{color:var(--gold)}
+.sidebar-logo small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px}
+.sidebar-nav{padding:16px 0;flex:1}
+.nav-group-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:12px 24px 6px;font-weight:600}
+.sidebar-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 24px;color:rgba(255,255,255,0.6);
+  font-size:13px;font-weight:500;cursor:pointer;
+  transition:background .2s,color .2s;
+}
+.sidebar-item:hover,.sidebar-item.active{background:rgba(255,255,255,0.08);color:#fff}
+.sidebar-item.active{border-right:3px solid var(--gold)}
+.sidebar-item svg{width:18px;height:18px;stroke:currentColor;fill:none;flex-shrink:0}
+.sidebar-bottom{padding:16px 24px 24px;border-top:1px solid rgba(255,255,255,0.1)}
+.sidebar-user{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:12px}
+.sidebar-user strong{display:block;color:rgba(255,255,255,0.85);font-size:13px}
+.sidebar-logout{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;transition:color .2s;
+}
+.sidebar-logout:hover{color:#fff}
+
+/* ── MAIN CONTENT ── */
+.main{flex:1;min-width:0;padding:32px;overflow-x:hidden}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.page-title{font-family:var(--serif);font-size:28px;font-weight:400}
+.page-sub{font-size:13px;color:var(--gray);margin-top:2px}
+.btn{
+  padding:10px 22px;font-size:11px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s;border:none;
+  font-family:var(--sans);
+}
+.btn-primary{background:var(--forest);color:#fff}
+.btn-primary:hover{background:var(--dark)}
+.btn-gold{background:var(--gold);color:var(--dark)}
+.btn-gold:hover{opacity:.88}
+.btn-danger{background:var(--red);color:#fff}
+.btn-outline{background:transparent;border:1.5px solid var(--stone);color:var(--dark)}
+.btn-outline:hover{background:var(--stone)}
+.btn-sm{padding:7px 14px;font-size:10px}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--white);padding:24px 20px;border-bottom:3px solid transparent}
+.stat-card.green{border-bottom-color:var(--green)}
+.stat-card.gold{border-bottom-color:var(--gold)}
+.stat-card.blue{border-bottom-color:var(--blue)}
+.stat-card.forest{border-bottom-color:var(--forest)}
+.stat-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.stat-icon svg{width:20px;height:20px;stroke:#fff;fill:none}
+.stat-num{font-family:var(--serif);font-size:32px;font-weight:400;line-height:1;margin-bottom:4px}
+.stat-label{font-size:11px;color:var(--lgray);letter-spacing:0.5px}
+.stat-delta{font-size:11px;color:var(--green);margin-top:6px;font-weight:500}
+
+/* ── CHART ── */
+.chart-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px}
+.chart-card{background:var(--white);padding:24px}
+.chart-card h3{font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:20px}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:140px}
+.bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.bar{background:var(--forest);width:100%;transition:height .4s;min-height:4px;opacity:.85}
+.bar:hover{opacity:1;background:var(--gold)}
+.bar-label{font-size:9px;color:var(--lgray);letter-spacing:.5px}
+.bar-val{font-size:9px;color:var(--gray)}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
+.donut-legend{margin-top:16px;width:100%}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gray);margin-bottom:6px}
+.donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ── TABLE ── */
+.table-card{background:var(--white);overflow:hidden;margin-bottom:20px}
+.table-head-bar{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--stone);flex-wrap:wrap;gap:12px}
+.table-head-bar h3{font-family:var(--serif);font-size:18px;font-weight:400}
+.search-input{
+  border:1.5px solid var(--stone);padding:8px 14px;font-size:13px;outline:none;
+  transition:border-color .2s;width:220px;
+}
+.search-input:focus{border-color:var(--forest)}
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lgray);font-weight:600;text-align:left;padding:12px 16px;background:var(--ivory);border-bottom:1px solid var(--stone)}
+.data-table td{padding:14px 16px;border-bottom:1px solid var(--stone);font-size:13px;vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--ivory)}
+.table-scroll{overflow-x:auto}
+.status-badge{
+  display:inline-block;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+}
+.status-new{background:#FEF3C7;color:#92400E}
+.status-confirmed{background:#D1FAE5;color:#065F46}
+.status-production{background:#DBEAFE;color:#1E40AF}
+.status-shipped{background:#EDE9FE;color:#4C1D95}
+.status-done{background:#D1FAE5;color:#065F46}
+.status-cancelled{background:#FEE2E2;color:#991B1B}
+.table-actions{display:flex;gap:8px;align-items:center}
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;border-top:1px solid var(--stone)}
+.pg-btn{
+  width:36px;height:36px;border:1px solid var(--stone);background:transparent;
+  font-size:13px;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;
+}
+.pg-btn:hover,.pg-btn.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:800;background:rgba(0,0,0,0.45);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;padding:20px;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--white);width:100%;max-width:520px;padding:36px;max-height:90vh;overflow-y:auto;position:relative}
+.modal h3{font-family:var(--serif);font-size:22px;font-weight:400;margin-bottom:24px}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--lgray);font-size:20px}
+.modal-close:hover{color:var(--dark)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);font-weight:600}
+.form-field input,.form-field select,.form-field textarea{
+  border:1.5px solid var(--stone);padding:10px 12px;font-size:13px;outline:none;transition:border-color .2s;background:transparent;
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--forest)}
+.form-field textarea{resize:vertical;min-height:80px}
+.modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--stone);margin-bottom:24px;flex-wrap:wrap}
+.tab{
+  padding:10px 20px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;color:var(--lgray);border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.tab.active{color:var(--forest);border-bottom-color:var(--forest)}
+
+/* ── LOADING ── */
+.loading{text-align:center;padding:60px;color:var(--lgray);font-size:14px}
+.loading-spinner{width:32px;height:32px;border:3px solid var(--stone);border-top-color:var(--forest);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--dark);color:#fff;padding:12px 24px;font-size:13px;font-weight:500;
+  z-index:9000;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── ORDER DETAIL ── */
+.order-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.detail-block{background:var(--ivory);padding:16px}
+.detail-block h4{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lgray);margin-bottom:10px;font-weight:600}
+.detail-block p{font-size:13px;margin-bottom:4px;color:var(--dark)}
+.detail-block p span{color:var(--lgray)}
+.order-items-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+.order-items-table th{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--lgray);text-align:left;padding:8px 12px;background:var(--ivory);font-weight:600}
+.order-items-table td{padding:10px 12px;border-bottom:1px solid var(--stone);font-size:13px}
+.order-total{text-align:right;font-size:18px;font-weight:600;color:var(--forest);padding:12px 0}
+.status-select{border:1.5px solid var(--stone);padding:8px 12px;font-size:13px;outline:none;background:transparent;cursor:pointer}
+
+/* ── KASPI BLOCK ── */
+.kaspi-box{background:var(--ivory);border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:16px}
+.kaspi-box .kaspi-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lgray);font-weight:600;margin-bottom:6px}
+.kaspi-box .kaspi-phone{font-family:var(--serif);font-size:22px;color:var(--forest)}
+.kaspi-box .kaspi-sum{font-size:13px;color:var(--gray);margin-top:4px}
+.kaspi-link{display:inline-block;margin-top:10px;background:#f50;color:#fff;padding:9px 20px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none}
+.kaspi-link:hover{background:#d44400}
+
+/* ── SETTINGS INFO ── */
+.info-box{background:var(--ivory);padding:16px 20px;border-left:3px solid var(--forest);margin-bottom:16px;font-size:13px;color:var(--gray);line-height:1.7}
+.info-box strong{color:var(--dark)}
+.info-box code{background:var(--stone);padding:2px 6px;font-size:12px;font-family:monospace}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .sidebar{width:60px}
+  .sidebar-logo small,.sidebar-item span,.sidebar-logo span,.sidebar-user,.sidebar-logout span,.nav-group-label{display:none}
+  .sidebar-logo{padding:20px 18px;font-size:0}
+  .sidebar-item{padding:16px;justify-content:center}
+  .sidebar-item svg{width:20px;height:20px}
+  .main{padding:20px 16px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .order-detail-grid{grid-template-columns:1fr}
+  .chart-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .page-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .stat-card{padding:18px 14px}
+  .stat-num{font-size:26px}
+}
+</style>
+</head>
+<body>
+
+<!-- AUTH GATE -->
+<div id="authGate">
+  <div class="auth-box">
+    <span class="auth-logo">Qamshy <span>Made</span></span>
+    <h1>Панель администратора</h1>
+    <p>Войдите с правами администратора</p>
+    <div class="auth-field">
+      <label>Email</label>
+      <input type="email" id="adEmail" placeholder="admin@qamshy.kz">
+    </div>
+    <div class="auth-field">
+      <label>Пароль</label>
+      <input type="password" id="adPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+    </div>
+    <div class="auth-err" id="adErr"></div>
+    <button class="auth-btn" onclick="adminLogin()">Войти</button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-logo">Qamshy <span>Made</span><small>Админ панель</small></div>
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Главное</div>
+    <div class="sidebar-item active" onclick="showPage('dashboard')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Дашборд</span>
+    </div>
+    <div class="nav-group-label">Магазин</div>
+    <div class="sidebar-item" onclick="showPage('orders')">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span>Заказы</span>
+    </div>
+    <div class="sidebar-item" onclick="showPage('products')">
+      <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      <span>Товары</span>
+    </div>
+    <div class="nav-group-label">Пользователи</div>
+    <div class="sidebar-item" onclick="showPage('users')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Пользователи</span>
+    </div>
+    <div class="sidebar-item" onclick="showPage('analytics')">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+      <span>Аналитика</span>
+    </div>
+    <div class="sidebar-item" onclick="showPage('settings')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Настройки</span>
+    </div>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user" id="adminName"><strong>Загрузка...</strong></div>
+    <div class="sidebar-logout" onclick="adminLogout()">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Выйти</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainContent"></div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-close" onclick="closeOrderModal()">✕</div>
+    <h3 id="orderModalTitle">Заказ</h3>
+    <div id="orderModalBody"></div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-close" onclick="closeProductModal()">✕</div>
+    <h3 id="productModalTitle">Добавить товар</h3>
+    <div class="form-grid">
+      <div class="form-field full">
+        <label>Название</label>
+        <input type="text" id="pm_name" placeholder="Кровать «Arco Forest»">
+      </div>
+      <div class="form-field">
+        <label>Категория</label>
+        <select id="pm_cat">
+          <option value="beds">Кровати</option>
+          <option value="sofas">Диваны</option>
+          <option value="chairs">Кресла</option>
+          <option value="sets">Гарнитуры</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Цена (₸)</label>
+        <input type="number" id="pm_price" placeholder="180000">
+      </div>
+      <div class="form-field">
+        <label>Старая цена (₸)</label>
+        <input type="number" id="pm_oldprice" placeholder="212000">
+      </div>
+      <div class="form-field">
+        <label>Метка</label>
+        <select id="pm_label">
+          <option value="">Без метки</option>
+          <option value="new">Новинка</option>
+          <option value="hit">Хит</option>
+          <option value="sale">Скидка</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>В наличии</label>
+        <select id="pm_stock">
+          <option value="true">Да</option>
+          <option value="false">Нет</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Описание</label>
+        <textarea id="pm_desc" placeholder="Краткое описание товара..."></textarea>
+      </div>
+      <div class="form-field full">
+        <label>URL изображения (необязательно)</label>
+        <input type="text" id="pm_img" placeholder="https://...">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeProductModal()">Отмена</button>
+      <button class="btn btn-primary" onclick="saveProduct()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="adToast"></div>
+
+<script>
+// ================================================================
+// ⚠️  ЗАМЕНИТЕ НА СВОИ ДАННЫЕ SUPABASE
+// Получить можно на: https://supabase.com → Project Settings → API
+// ================================================================
+const SUPABASE_URL = 'https://cimwdsjagnzqgvqvhcan.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpbXdkc2phZ256cWd2cXZoY2FuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDkzNjMsImV4cCI6MjA5MDEyNTM2M30.jczq0BnsnLYOSguN2vW2amQnGl4BNgOR4D2uF6PEZtg';
+// ================================================================
+
+// Простой Supabase клиент без SDK (fetch-based)
+const sb = {
+  url: SUPABASE_URL,
+  key: SUPABASE_ANON_KEY,
+  headers: {
+    'apikey': SUPABASE_ANON_KEY,
+    'Content-Type': 'application/json'
+  },
+  authHeaders(token) {
+    return token
+      ? { ...this.headers, 'Authorization': `Bearer ${token}` }
+      : { ...this.headers, 'Authorization': `Bearer ${this.key}` };
+  },
+  async from(table, token) {
+    const h = this.authHeaders(token);
+    return {
+      select: async (cols='*', opts={}) => {
+        let url = `${sb.url}/rest/v1/${table}?select=${cols}`;
+        if (opts.order) url += `&order=${opts.order}`;
+        if (opts.filter) url += `&${opts.filter}`;
+        const r = await fetch(url, { headers: h });
+        if (!r.ok) throw await r.json();
+        return r.json();
+      },
+      insert: async (data) => {
+        const r = await fetch(`${sb.url}/rest/v1/${table}`, {
+          method:'POST', headers:{...h,'Prefer':'return=representation'},
+          body: JSON.stringify(data)
+        });
+        if (!r.ok) throw await r.json();
+        return r.json();
+      },
+      update: async (data, match) => {
+        let url = `${sb.url}/rest/v1/${table}?${match}`;
+        const r = await fetch(url, {
+          method:'PATCH', headers:{...h,'Prefer':'return=representation'},
+          body: JSON.stringify(data)
+        });
+        if (!r.ok) throw await r.json();
+        return r.json();
+      },
+      delete: async (match) => {
+        const r = await fetch(`${sb.url}/rest/v1/${table}?${match}`, {
+          method:'DELETE', headers: h
+        });
+        if (!r.ok) throw await r.json();
+        return true;
+      }
+    };
+  },
+  async signIn(email, password) {
+    const r = await fetch(`${this.url}/auth/v1/token?grant_type=password`, {
+      method:'POST', headers: this.headers,
+      body: JSON.stringify({ email, password })
+    });
+    return r.json();
+  },
+  async signOut(token) {
+    await fetch(`${this.url}/auth/v1/logout`, {
+      method:'POST', headers: this.authHeaders(token)
+    });
+  },
+  async getUser(token) {
+    const r = await fetch(`${this.url}/auth/v1/user`, {
+      headers: this.authHeaders(token)
+    });
+    return r.json();
+  }
+};
+
+// ── STATE ──
+let currentAdmin = null;
+let authToken = null;
+let allOrders = [], allProducts = [], allUsers = [];
+let editingProductId = null;
+
+// ── AUTH ──
+window.adminLogin = async function() {
+  const email = document.getElementById('adEmail').value.trim();
+  const pass  = document.getElementById('adPass').value;
+  const err   = document.getElementById('adErr');
+  err.style.display = 'none';
+  if (!email || !pass) { err.style.display='block'; err.textContent='Введите email и пароль'; return; }
+
+  // Demo mode check
+  if (SUPABASE_URL.includes('YOUR_PROJECT')) {
+    demoLogin(email, pass);
+    return;
+  }
+
+  try {
+    const data = await sb.signIn(email, password);
+    if (data.error) throw new Error(data.error_description || data.error);
+    authToken = data.access_token;
+    // Check admin role via profiles table
+    const t = await sb.from('admins', authToken);
+    const rows = await t.select('id', { filter: `id=eq.${data.user.id}` });
+    if (!rows || rows.length === 0) {
+      await sb.signOut(authToken);
+      authToken = null;
+      err.style.display='block'; err.textContent='Нет прав администратора';
+      return;
+    }
+    currentAdmin = data.user;
+    onLoginSuccess();
+  } catch(e) {
+    err.style.display='block';
+    err.textContent = e.message || 'Ошибка входа';
+  }
+};
+
+function demoLogin(email, pass) {
+  if (email === 'admin@qamshy.kz' && pass === 'admin123') {
+    currentAdmin = { id:'demo', email, user_metadata:{ full_name:'Администратор' } };
+    authToken = 'demo';
+    onLoginSuccess();
+  } else {
+    const err = document.getElementById('adErr');
+    err.style.display='block';
+    err.textContent = 'Демо: admin@qamshy.kz / admin123';
+  }
+}
+
+function onLoginSuccess() {
+  document.getElementById('authGate').style.display='none';
+  const name = currentAdmin.user_metadata?.full_name || currentAdmin.email;
+  document.getElementById('adminName').innerHTML = `<strong>${name}</strong>`;
+  loadAll().then(() => showPage('dashboard'));
+}
+
+window.adminLogout = async function() {
+  if (authToken && authToken !== 'demo') await sb.signOut(authToken);
+  currentAdmin = null; authToken = null;
+  document.getElementById('authGate').style.display='flex';
+};
+
+// ── LOAD DATA ──
+async function loadAll() {
+  if (authToken === 'demo') {
+    allOrders   = getDemoOrders();
+    allProducts = getDemoProducts();
+    allUsers    = getDemoUsers();
+    return;
+  }
+  try {
+    const [oTbl, pTbl, uTbl] = await Promise.all([
+      sb.from('orders', authToken),
+      sb.from('products', authToken),
+      sb.from('profiles', authToken)
+    ]);
+    allOrders   = await oTbl.select('*', { order:'created_at.desc' });
+    allProducts = await pTbl.select('*');
+    allUsers    = await uTbl.select('*');
+  } catch(e) {
+    adToast('Ошибка загрузки данных: ' + (e.message||e));
+    allOrders=getDemoOrders(); allProducts=getDemoProducts(); allUsers=getDemoUsers();
+  }
+}
+
+// ── PAGES ──
+window.showPage = function(page) {
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+  const map={dashboard:0,orders:1,products:2,users:3,analytics:4,settings:5};
+  const items=document.querySelectorAll('.sidebar-item');
+  if (items[map[page]]) items[map[page]].classList.add('active');
+  const main = document.getElementById('mainContent');
+  if (page==='dashboard')  renderDashboard(main);
+  else if (page==='orders')    renderOrders(main);
+  else if (page==='products')  renderProducts(main);
+  else if (page==='users')     renderUsers(main);
+  else if (page==='analytics') renderAnalytics(main);
+  else if (page==='settings')  renderSettings(main);
+};
+
+// ── DASHBOARD ──
+function renderDashboard(el) {
+  const totalRev = allOrders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+(o.total||0),0);
+  const newOrders = allOrders.filter(o=>o.status==='new').length;
+  el.innerHTML = `
+    <div class="page-header">
+      <div><div class="page-title">Дашборд</div><div class="page-sub">Обзор магазина</div></div>
+      <button class="btn btn-outline btn-sm" onclick="loadAll().then(()=>showPage('dashboard'))">↻ Обновить</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card forest">
+        <div class="stat-icon" style="background:var(--forest)"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div>
+        <div class="stat-num">${allOrders.length}</div>
+        <div class="stat-label">Всего заказов</div>
+        <div class="stat-delta">▲ ${newOrders} новых</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-icon" style="background:var(--gold)"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="stat-num">${(totalRev/1000).toFixed(0)}K</div>
+        <div class="stat-label">Выручка (₸)</div>
+        <div class="stat-delta">₸${totalRev.toLocaleString('ru-RU')}</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-icon" style="background:var(--green)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <div class="stat-num">${allUsers.length}</div>
+        <div class="stat-label">Пользователей</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon" style="background:var(--blue)"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <div class="stat-num">${allProducts.length}</div>
+        <div class="stat-label">Товаров</div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-head-bar"><h3>Последние заказы</h3><button class="btn btn-outline btn-sm" onclick="showPage('orders')">Все заказы →</button></div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>№ Заказа</th><th>Клиент</th><th>Товары</th><th>Сумма</th><th>Оплата</th><th>Статус</th><th>Дата</th></tr></thead>
+          <tbody>
+            ${allOrders.slice(0,8).map(o=>`
+              <tr style="cursor:pointer" onclick="openOrderModal('${o.id}')">
+                <td><strong>${o.order_num||o.id?.slice(-6)||'—'}</strong></td>
+                <td>${o.user_name||'—'}</td>
+                <td>${(o.items||[]).length} позиций</td>
+                <td><strong>${(o.total||0).toLocaleString('ru-RU')} ₸</strong></td>
+                <td>${paymentLabel(o.payment)}</td>
+                <td><span class="status-badge status-${o.status||'new'}">${statusLabel(o.status)}</span></td>
+                <td>${formatDate(o.created_at)}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ── ORDERS ──
+function renderOrders(el, filter='all', search='') {
+  let orders = allOrders;
+  if (filter !== 'all') orders = orders.filter(o=>o.status===filter);
+  if (search) orders = orders.filter(o=>
+    (o.order_num||'').toLowerCase().includes(search.toLowerCase()) ||
+    (o.user_name||'').toLowerCase().includes(search.toLowerCase()) ||
+    (o.phone||'').includes(search)
+  );
+  el.innerHTML = `
+    <div class="page-header">
+      <div><div class="page-title">Заказы</div><div class="page-sub">${orders.length} заказов</div></div>
+    </div>
+    <div class="tabs">
+      ${['all','new','confirmed','production','shipped','done','cancelled'].map(s=>`
+        <div class="tab ${filter===s?'active':''}" onclick="renderOrdersPage('${s}')">${statusLabel(s)||'Все'}</div>`).join('')}
+    </div>
+    <div class="table-card">
+      <div class="table-head-bar">
+        <h3>Список заказов</h3>
+        <input class="search-input" placeholder="Поиск по имени, номеру, телефону..." oninput="renderOrdersPage('${filter}',this.value)" value="${search}">
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>№</th><th>Клиент</th><th>Телефон</th><th>Город</th><th>Товары</th><th>Сумма</th><th>Оплата</th><th>Статус</th><th>Дата</th><th></th></tr></thead>
+          <tbody>
+            ${orders.map(o=>`
+              <tr>
+                <td><strong>${o.order_num||o.id?.slice(-6)||'—'}</strong></td>
+                <td>${o.user_name||'—'}</td>
+                <td>${o.phone||'—'}</td>
+                <td>${o.city||'—'}</td>
+                <td>${(o.items||[]).length} поз.</td>
+                <td><strong>${(o.total||0).toLocaleString('ru-RU')} ₸</strong></td>
+                <td>${paymentLabel(o.payment)}</td>
+                <td><span class="status-badge status-${o.status||'new'}">${statusLabel(o.status)}</span></td>
+                <td>${formatDate(o.created_at)}</td>
+                <td><button class="btn btn-outline btn-sm" onclick="openOrderModal('${o.id}')">Открыть</button></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+window.renderOrdersPage = (f='all',s='') => renderOrders(document.getElementById('mainContent'),f,s);
+
+window.openOrderModal = function(id) {
+  const o = allOrders.find(x=>x.id===id);
+  if (!o) return;
+  const kaspiPhone = (window._kaspiPhone||'+7 (7XX) XXX-XX-XX');
+  document.getElementById('orderModalTitle').textContent = 'Заказ ' + (o.order_num||id?.slice(-6)||'');
+  document.getElementById('orderModalBody').innerHTML = `
+    <div class="order-detail-grid">
+      <div class="detail-block">
+        <h4>Клиент</h4>
+        <p><span>Имя:</span> ${o.user_name||'—'}</p>
+        <p><span>Телефон:</span> ${o.phone||'—'}</p>
+        <p><span>Email:</span> ${o.user_email||'—'}</p>
+      </div>
+      <div class="detail-block">
+        <h4>Доставка</h4>
+        <p><span>Город:</span> ${o.city||'—'}</p>
+        <p><span>Адрес:</span> ${o.address||'—'}</p>
+        <p><span>Тип:</span> ${deliveryLabel(o.delivery)}</p>
+      </div>
+    </div>
+    <table class="order-items-table">
+      <thead><tr><th>Товар</th><th>Кол-во</th><th>Цена</th><th>Итого</th></tr></thead>
+      <tbody>
+        ${(o.items||[]).map(i=>`<tr>
+          <td>${i.name}</td><td>${i.qty}</td>
+          <td>${(i.price||0).toLocaleString('ru-RU')} ₸</td>
+          <td>${((i.price||0)*i.qty).toLocaleString('ru-RU')} ₸</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="order-total">Итого: ${(o.total||0).toLocaleString('ru-RU')} ₸</div>
+    ${o.payment==='kaspi' ? `
+    <div class="kaspi-box">
+      <div class="kaspi-title">💳 Kaspi Pay — реквизиты для оплаты</div>
+      <div class="kaspi-phone">${kaspiPhone}</div>
+      <div class="kaspi-sum">Сумма к переводу: <strong>${(o.total||0).toLocaleString('ru-RU')} ₸</strong></div>
+      <a href="https://pay.kaspi.kz/pay/send?phoneNumber=${kaspiPhone.replace(/\D/g,'').replace(/^7/,'7')}&sum=${o.total||0}&comment=Qamshy+Made+${o.order_num||''}" target="_blank" class="kaspi-link">Открыть Kaspi →</a>
+    </div>` : ''}
+    ${o.comment ? `<div style="font-size:13px;color:var(--gray);margin-bottom:16px;padding:12px;background:var(--ivory)">💬 ${o.comment}</div>` : ''}
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
+      <span style="font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray)">Статус:</span>
+      <select class="status-select" id="statusSel" onchange="updateOrderStatus('${id}',this.value)">
+        ${['new','confirmed','production','shipped','done','cancelled'].map(s=>`
+          <option value="${s}" ${o.status===s?'selected':''}>${statusLabel(s)}</option>`).join('')}
+      </select>
+      ${o.phone ? `<a href="https://wa.me/${(o.phone||'').replace(/\D/g,'')}" target="_blank" class="btn btn-primary btn-sm">WhatsApp</a>` : ''}
+    </div>`;
+  document.getElementById('orderModal').classList.add('open');
+};
+window.closeOrderModal = () => document.getElementById('orderModal').classList.remove('open');
+
+window.updateOrderStatus = async function(id, status) {
+  try {
+    if (authToken !== 'demo') {
+      const t = await sb.from('orders', authToken);
+      await t.update({ status }, `id=eq.${id}`);
+    }
+    const o = allOrders.find(x=>x.id===id);
+    if (o) o.status = status;
+    adToast('Статус обновлён');
+  } catch(e) { adToast('Ошибка: ' + (e.message||e)); }
+};
+
+// ── PRODUCTS ──
+function renderProducts(el) {
+  el.innerHTML = `
+    <div class="page-header">
+      <div><div class="page-title">Товары</div><div class="page-sub">${allProducts.length} позиций</div></div>
+      <button class="btn btn-primary" onclick="openProductModal()">+ Добавить товар</button>
+    </div>
+    <div class="table-card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Название</th><th>Категория</th><th>Цена</th><th>Старая цена</th><th>Метка</th><th>В наличии</th><th></th></tr></thead>
+          <tbody>
+            ${allProducts.map(p=>`
+              <tr>
+                <td><strong>${p.name}</strong></td>
+                <td>${catLabel(p.cat)}</td>
+                <td>${(p.price||0).toLocaleString('ru-RU')} ₸</td>
+                <td>${p.old_price ? (p.old_price).toLocaleString('ru-RU')+' ₸' : '—'}</td>
+                <td>${p.label?`<span class="status-badge status-${p.label==='new'?'confirmed':p.label==='hit'?'shipped':'new'}">${labelText(p.label)}</span>`:'—'}</td>
+                <td><span class="status-badge ${p.in_stock!==false?'status-confirmed':'status-cancelled'}">${p.in_stock!==false?'Да':'Нет'}</span></td>
+                <td><div class="table-actions">
+                  <button class="btn btn-outline btn-sm" onclick="editProduct('${p.id}')">Изменить</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Удалить</button>
+                </div></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+window.openProductModal = function(product=null) {
+  editingProductId = product ? product.id : null;
+  document.getElementById('productModalTitle').textContent = product ? 'Редактировать товар' : 'Добавить товар';
+  document.getElementById('pm_name').value = product?.name||'';
+  document.getElementById('pm_cat').value  = product?.cat||'beds';
+  document.getElementById('pm_price').value    = product?.price||'';
+  document.getElementById('pm_oldprice').value = product?.old_price||'';
+  document.getElementById('pm_label').value    = product?.label||'';
+  document.getElementById('pm_stock').value    = String(product?.in_stock!==false);
+  document.getElementById('pm_desc').value     = product?.desc||'';
+  document.getElementById('pm_img').value      = product?.img||'';
+  document.getElementById('productModal').classList.add('open');
+};
+window.closeProductModal = () => document.getElementById('productModal').classList.remove('open');
+
+window.editProduct = function(id) {
+  const p = allProducts.find(x=>x.id===id);
+  if (p) openProductModal(p);
+};
+
+window.saveProduct = async function() {
+  const data = {
+    name:      document.getElementById('pm_name').value.trim(),
+    cat:       document.getElementById('pm_cat').value,
+    price:     parseInt(document.getElementById('pm_price').value)||0,
+    old_price: parseInt(document.getElementById('pm_oldprice').value)||0,
+    label:     document.getElementById('pm_label').value,
+    in_stock:  document.getElementById('pm_stock').value === 'true',
+    desc:      document.getElementById('pm_desc').value.trim(),
+    img:       document.getElementById('pm_img').value.trim(),
+    updated_at: new Date().toISOString()
+  };
+  if (!data.name) { adToast('Введите название'); return; }
+  try {
+    if (authToken === 'demo') {
+      if (editingProductId) {
+        const i = allProducts.findIndex(p=>p.id===editingProductId);
+        if (i>=0) allProducts[i] = {...allProducts[i],...data};
+        adToast('Товар обновлён (демо)');
+      } else {
+        allProducts.push({id:'p'+Date.now(),...data});
+        adToast('Товар добавлен (демо)');
+      }
+    } else {
+      const t = await sb.from('products', authToken);
+      if (editingProductId) {
+        await t.update(data, `id=eq.${editingProductId}`);
+        const i = allProducts.findIndex(p=>p.id===editingProductId);
+        if (i>=0) allProducts[i] = {...allProducts[i],...data};
+        adToast('Товар обновлён');
+      } else {
+        data.created_at = new Date().toISOString();
+        const rows = await t.insert(data);
+        allProducts.push(rows[0]);
+        adToast('Товар добавлен');
+      }
+    }
+    closeProductModal();
+    renderProducts(document.getElementById('mainContent'));
+  } catch(e) { adToast('Ошибка: '+(e.message||JSON.stringify(e))); }
+};
+
+window.deleteProduct = async function(id) {
+  if (!confirm('Удалить товар?')) return;
+  try {
+    if (authToken !== 'demo') {
+      const t = await sb.from('products', authToken);
+      await t.delete(`id=eq.${id}`);
+    }
+    allProducts = allProducts.filter(p=>p.id!==id);
+    adToast('Товар удалён');
+    renderProducts(document.getElementById('mainContent'));
+  } catch(e) { adToast('Ошибка: '+(e.message||e)); }
+};
+
+// ── USERS ──
+function renderUsers(el) {
+  el.innerHTML = `
+    <div class="page-header">
+      <div><div class="page-title">Пользователи</div><div class="page-sub">${allUsers.length} аккаунтов</div></div>
+    </div>
+    <div class="table-card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Имя</th><th>Email</th><th>Телефон</th><th>Роль</th><th>Зарегистрирован</th></tr></thead>
+          <tbody>
+            ${allUsers.map(u=>`
+              <tr>
+                <td><strong>${u.full_name||u.name||'—'}</strong></td>
+                <td>${u.email||'—'}</td>
+                <td>${u.phone||'—'}</td>
+                <td><span class="status-badge ${u.role==='admin'?'status-production':'status-confirmed'}">${u.role==='admin'?'Админ':'Клиент'}</span></td>
+                <td>${formatDate(u.created_at)}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ── ANALYTICS ──
+function renderAnalytics(el) {
+  const months = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+  const now = new Date();
+
+  // Monthly revenue
+  const monthly = Array(6).fill(0).map((_,i) => {
+    const d = new Date(now.getFullYear(), now.getMonth()-5+i, 1);
+    const rev = allOrders
+      .filter(o => {
+        if (!o.created_at) return false;
+        const od = new Date(o.created_at);
+        return od.getMonth()===d.getMonth() && od.getFullYear()===d.getFullYear() && o.status!=='cancelled';
+      })
+      .reduce((s,o)=>s+(o.total||0),0);
+    return { label: months[d.getMonth()], rev };
+  });
+  const maxRev = Math.max(...monthly.map(m=>m.rev), 1);
+
+  // Status breakdown
+  const statuses = ['new','confirmed','production','shipped','done','cancelled'];
+  const statusColors = {'new':'#C8A055','confirmed':'#2e7d5c','production':'#2563EB','shipped':'#7C3AED','done':'#059669','cancelled':'#cc3333'};
+  const statusCounts = statuses.map(s=>({ s, count:allOrders.filter(o=>o.status===s).length }));
+  const totalO = allOrders.length || 1;
+
+  // Top products
+  const productSales = {};
+  allOrders.filter(o=>o.status!=='cancelled').forEach(o=>{
+    (o.items||[]).forEach(i=>{ productSales[i.name]=(productSales[i.name]||0)+(i.qty||1); });
+  });
+  const topProducts = Object.entries(productSales).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+  const totalRev = allOrders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+(o.total||0),0);
+  const avgOrder = allOrders.length ? Math.round(totalRev/allOrders.length) : 0;
+  const doneRate = allOrders.length ? Math.round(allOrders.filter(o=>o.status==='done').length/allOrders.length*100) : 0;
+
+  el.innerHTML = `
+    <div class="page-header">
+      <div><div class="page-title">Аналитика</div><div class="page-sub">Статистика продаж</div></div>
+    </div>
+    <div class="stats-grid" style="margin-bottom:20px">
+      <div class="stat-card gold">
+        <div class="stat-icon" style="background:var(--gold)"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="stat-num">₸${(totalRev/1000).toFixed(0)}K</div>
+        <div class="stat-label">Общая выручка</div>
+        <div class="stat-delta">₸${totalRev.toLocaleString('ru-RU')}</div>
+      </div>
+      <div class="stat-card forest">
+        <div class="stat-icon" style="background:var(--forest)"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="stat-num">₸${avgOrder.toLocaleString('ru-RU')}</div>
+        <div class="stat-label">Средний чек</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-icon" style="background:var(--green)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="stat-num">${doneRate}%</div>
+        <div class="stat-label">Выполнено заказов</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon" style="background:var(--blue)"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div>
+        <div class="stat-num">${allOrders.filter(o=>o.status==='new').length}</div>
+        <div class="stat-label">Новых заказов</div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>Выручка по месяцам</h3>
+        <div class="bar-chart">
+          ${monthly.map(m=>`
+            <div class="bar-wrap">
+              <div class="bar-val">${m.rev>0?(m.rev/1000).toFixed(0)+'K':''}</div>
+              <div class="bar" style="height:${Math.round((m.rev/maxRev)*120)+4}px"></div>
+              <div class="bar-label">${m.label}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Статусы заказов</h3>
+        <div class="donut-legend">
+          ${statusCounts.map(({s,count})=>`
+            <div class="donut-item">
+              <div class="donut-dot" style="background:${statusColors[s]||'#ccc'}"></div>
+              <span style="flex:1">${statusLabel(s)}</span>
+              <strong>${count}</strong>
+              <span style="color:var(--lgray);margin-left:4px;min-width:36px;text-align:right">${Math.round(count/totalO*100)}%</span>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    ${topProducts.length > 0 ? `
+    <div class="table-card">
+      <div class="table-head-bar"><h3>Топ товаров по продажам</h3></div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Товар</th><th>Продано (шт.)</th></tr></thead>
+          <tbody>
+            ${topProducts.map(([name,qty],i)=>`
+              <tr>
+                <td><strong>${i+1}</strong></td>
+                <td>${name}</td>
+                <td>${qty}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>` : ''}`;
+}
+
+// ── SETTINGS ──
+function renderSettings(el) {
+  el.innerHTML = `
+    <div class="page-header"><div><div class="page-title">Настройки</div></div></div>
+
+    <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+      <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:20px">Контакты магазина</h3>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>WhatsApp</label>
+          <input type="text" id="set_wa" value="+7 (7XX) XXX-XX-XX" placeholder="+7...">
+        </div>
+        <div class="form-field">
+          <label>Instagram</label>
+          <input type="text" id="set_ig" value="@qamshy.made">
+        </div>
+        <div class="form-field">
+          <label>Kaspi номер для оплаты</label>
+          <input type="text" id="set_kaspi" value="+7 (7XX) XXX-XX-XX">
+        </div>
+        <div class="form-field">
+          <label>Город</label>
+          <input type="text" id="set_city" value="Актобе">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:20px" onclick="saveSettings()">Сохранить</button>
+    </div>
+
+    <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+      <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:16px">Supabase — подключение</h3>
+      <div class="info-box">
+        <strong>Шаг 1.</strong> Зарегистрируйтесь на <a href="https://supabase.com" target="_blank" style="color:var(--forest);text-decoration:underline">supabase.com</a> и создайте проект (бесплатно).<br>
+        <strong>Шаг 2.</strong> Скопируйте <code>Project URL</code> и <code>anon public key</code> из <em>Settings → API</em>.<br>
+        <strong>Шаг 3.</strong> Вставьте их в начало файла <code>admin.html</code> в переменные <code>SUPABASE_URL</code> и <code>SUPABASE_ANON_KEY</code>.<br>
+        <strong>Шаг 4.</strong> Создайте таблицы (SQL ниже) и включите <strong>Authentication → Email</strong>.
+      </div>
+
+      <h4 style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--gray)">SQL для создания таблиц (выполнить в Supabase SQL Editor):</h4>
+      <pre style="background:var(--dark);color:#a8ff78;padding:16px;font-size:12px;overflow-x:auto;margin-bottom:16px;line-height:1.7">-- Таблица товаров
+create table products (
+  id uuid default gen_random_uuid() primary key,
+  name text not null,
+  cat text,
+  price integer default 0,
+  old_price integer default 0,
+  label text,
+  desc text,
+  img text,
+  in_stock boolean default true,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Таблица заказов
+create table orders (
+  id uuid default gen_random_uuid() primary key,
+  order_num text,
+  user_id uuid references auth.users,
+  user_name text,
+  user_email text,
+  phone text,
+  city text,
+  address text,
+  delivery text,
+  payment text,
+  items jsonb default '[]',
+  total integer default 0,
+  status text default 'new',
+  comment text,
+  created_at timestamptz default now()
+);
+
+-- Таблица профилей пользователей
+create table profiles (
+  id uuid references auth.users primary key,
+  full_name text,
+  phone text,
+  email text,
+  role text default 'customer',
+  created_at timestamptz default now()
+);
+
+-- Таблица администраторов
+create table admins (
+  id uuid references auth.users primary key,
+  granted_at timestamptz default now()
+);
+
+-- Разрешения RLS (Row Level Security)
+alter table products enable row level security;
+alter table orders enable row level security;
+alter table profiles enable row level security;
+alter table admins enable row level security;
+
+-- Товары: читать всем, писать только админам
+create policy "products_read" on products for select using (true);
+create policy "products_write" on products for all
+  using (exists (select 1 from admins where id = auth.uid()));
+
+-- Заказы: читать и писать только админам
+create policy "orders_admin" on orders for all
+  using (exists (select 1 from admins where id = auth.uid()));
+
+-- Заказы: создавать может любой авторизованный
+create policy "orders_insert" on orders for insert
+  with check (auth.uid() is not null);
+
+-- Профили: свой профиль
+create policy "profiles_own" on profiles for all
+  using (id = auth.uid());
+
+-- Профили: читать могут админы
+create policy "profiles_admin_read" on profiles for select
+  using (exists (select 1 from admins where id = auth.uid()));
+
+-- Admins: читать могут авторизованные
+create policy "admins_read" on admins for select
+  using (auth.uid() is not null);
+
+-- Добавить первого администратора (замените YOUR_USER_ID):
+-- insert into admins (id) values ('YOUR_USER_ID');</pre>
+
+      <div class="info-box">
+        <strong>Демо-режим:</strong> Пока Supabase не настроен, войдите с <code>admin@qamshy.kz</code> / <code>admin123</code> для просмотра демо-данных.
+      </div>
+    </div>`;
+}
+
+window.saveSettings = function() {
+  const kaspi = document.getElementById('set_kaspi')?.value?.trim();
+  if (kaspi) window._kaspiPhone = kaspi;
+  adToast('Настройки сохранены!');
+};
+
+// ── HELPERS ──
+function statusLabel(s){
+  return {new:'🟡 Новый',confirmed:'✅ Подтверждён',production:'🔵 В производстве',shipped:'📦 Отправлен',done:'✓ Выполнен',cancelled:'✕ Отменён',all:'Все'}[s]||s;
+}
+function paymentLabel(p){return {kaspi:'💳 Kaspi',card:'Карта',installment:'Рассрочка'}[p]||p||'—'}
+function deliveryLabel(d){return {courier:'Курьер',cdek:'СДЭК/Казпочта',pickup:'Самовывоз'}[d]||d||'—'}
+function catLabel(c){return {beds:'Кровати',sofas:'Диваны',chairs:'Кресла',sets:'Гарнитуры'}[c]||c||'—'}
+function labelText(l){return {new:'Новинка',hit:'Хит',sale:'Скидка'}[l]||l}
+function formatDate(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  if (isNaN(d)) return '—';
+  return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+window.adToast = function(msg) {
+  const t = document.getElementById('adToast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+};
+
+// ── DEMO DATA ──
+function getDemoOrders(){return[
+  {id:'demo1',order_num:'QM-001',user_name:'Айгерим Касымова',phone:'+7 701 123 4567',city:'Актобе',address:'ул. Маяковского, 12',delivery:'courier',payment:'kaspi',items:[{name:'Кровать Arco Forest',price:180000,qty:1}],total:180000,status:'new',comment:'Велюр серый',created_at:new Date(Date.now()-86400000*2).toISOString()},
+  {id:'demo2',order_num:'QM-002',user_name:'Динара Мухамедова',phone:'+7 702 987 6543',city:'Астана',address:'пр. Туран, 45',delivery:'cdek',payment:'card',items:[{name:'Диван Oslo',price:320000,qty:1},{name:'Кресло Bloom',price:95000,qty:2}],total:510000,status:'production',comment:'',created_at:new Date(Date.now()-86400000*5).toISOString()},
+  {id:'demo3',order_num:'QM-003',user_name:'Мадина Сейткали',phone:'+7 705 555 0011',city:'Алматы',address:'ул. Абая, 80',delivery:'courier',payment:'kaspi',items:[{name:'Кровать Botanica',price:215000,qty:1}],total:215000,status:'done',comment:'',created_at:new Date(Date.now()-86400000*14).toISOString()},
+  {id:'demo4',order_num:'QM-004',user_name:'Руслан Абенов',phone:'+7 707 444 3322',city:'Актобе',address:'пр. Абилхайыр хана, 55',delivery:'pickup',payment:'kaspi',items:[{name:'Кресло Bloom',price:95000,qty:1}],total:95000,status:'confirmed',comment:'',created_at:new Date(Date.now()-86400000*1).toISOString()},
+  {id:'demo5',order_num:'QM-005',user_name:'Зарина Нурланова',phone:'+7 708 111 9900',city:'Актобе',address:'ул. Санкибай батыра, 3',delivery:'courier',payment:'installment',items:[{name:'Диван Oslo',price:320000,qty:1},{name:'Кровать Arco Forest',price:180000,qty:1}],total:500000,status:'shipped',comment:'Цвет: пудровый',created_at:new Date(Date.now()-86400000*7).toISOString()},
+];}
+function getDemoProducts(){return[
+  {id:'p1',name:'Кровать Arco Forest',cat:'beds',price:180000,old_price:212000,label:'hit',desc:'Велюр, лён, шенилл',in_stock:true},
+  {id:'p2',name:'Диван Oslo',cat:'sofas',price:320000,old_price:0,label:'new',desc:'',in_stock:true},
+  {id:'p3',name:'Кресло Bloom',cat:'chairs',price:95000,old_price:0,label:'',desc:'',in_stock:true},
+  {id:'p4',name:'Кровать Botanica',cat:'beds',price:215000,old_price:250000,label:'sale',desc:'Натуральный лён',in_stock:false},
+];}
+function getDemoUsers(){return[
+  {id:'u1',full_name:'Айгерим Касымова',email:'aigeim@mail.ru',phone:'+7 701 123 4567',role:'customer',created_at:new Date(Date.now()-86400000*30).toISOString()},
+  {id:'u2',full_name:'Динара Мухамедова',email:'dinara@mail.ru',phone:'+7 702 987 6543',role:'customer',created_at:new Date(Date.now()-86400000*25).toISOString()},
+  {id:'u3',full_name:'Admin',email:'admin@qamshy.kz',phone:'',role:'admin',created_at:new Date(Date.now()-86400000*60).toISOString()},
+];}
+
+// Auto-check demo mode on load
+window.addEventListener('load', () => {
+  if (SUPABASE_URL.includes('YOUR_PROJECT')) {
+    const p = document.createElement('p');
+    p.style.cssText = 'font-size:11px;color:rgba(255,255,255,0.5);margin-top:12px';
+    p.innerHTML = '🔧 Демо: <b style="color:rgba(255,255,255,0.8)">admin@qamshy.kz</b> / <b style="color:rgba(255,255,255,0.8)">admin123</b>';
+    document.querySelector('.auth-box').appendChild(p);
+  }
+});
+</script>
+</body>
+</html>
