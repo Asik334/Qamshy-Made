@@ -488,7 +488,7 @@ window.adminLogin = async function() {
   }
 
   try {
-    const data = await sb.signIn(email, password);
+    const data = await sb.signIn(email, pass);
     if (data.error) throw new Error(data.error_description || data.error);
     authToken = data.access_token;
     // Check admin role via profiles table
