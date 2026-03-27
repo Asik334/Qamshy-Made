@@ -1035,6 +1035,13 @@ function renderAnalytics(el) {
 }
 
 // ── SETTINGS ──
+const _settings = {
+  wa: localStorage.getItem('qs_wa') || '',
+  ig: localStorage.getItem('qs_ig') || '@qamshy.made',
+  kaspi: localStorage.getItem('qs_kaspi') || '',
+  city: localStorage.getItem('qs_city') || 'Актобе',
+};
+
 function renderSettings(el) {
   el.innerHTML = `
     <div class="page-header"><div><div class="page-title">Настройки</div></div></div>
@@ -1043,129 +1050,79 @@ function renderSettings(el) {
       <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:20px">Контакты магазина</h3>
       <div class="form-grid">
         <div class="form-field">
-          <label>WhatsApp</label>
-          <input type="text" id="set_wa" value="+7 (7XX) XXX-XX-XX" placeholder="+7...">
+          <label>WhatsApp (номер для заказов)</label>
+          <input type="text" id="set_wa" value="${_settings.wa}" placeholder="+7 701 234 56 78">
         </div>
         <div class="form-field">
           <label>Instagram</label>
-          <input type="text" id="set_ig" value="@qamshy.made">
+          <input type="text" id="set_ig" value="${_settings.ig}" placeholder="@qamshy.made">
         </div>
         <div class="form-field">
           <label>Kaspi номер для оплаты</label>
-          <input type="text" id="set_kaspi" value="+7 (7XX) XXX-XX-XX">
+          <input type="text" id="set_kaspi" value="${_settings.kaspi}" placeholder="+7 701 234 56 78">
         </div>
         <div class="form-field">
           <label>Город</label>
-          <input type="text" id="set_city" value="Актобе">
+          <input type="text" id="set_city" value="${_settings.city}" placeholder="Актобе">
         </div>
       </div>
       <button class="btn btn-primary" style="margin-top:20px" onclick="saveSettings()">Сохранить</button>
     </div>
 
     <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
-      <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:16px">Supabase — подключение</h3>
-      <div class="info-box">
-        <strong>Шаг 1.</strong> Зарегистрируйтесь на <a href="https://supabase.com" target="_blank" style="color:var(--forest);text-decoration:underline">supabase.com</a> и создайте проект (бесплатно).<br>
-        <strong>Шаг 2.</strong> Скопируйте <code>Project URL</code> и <code>anon public key</code> из <em>Settings → API</em>.<br>
-        <strong>Шаг 3.</strong> Вставьте их в начало файла <code>admin.html</code> в переменные <code>SUPABASE_URL</code> и <code>SUPABASE_ANON_KEY</code>.<br>
-        <strong>Шаг 4.</strong> Создайте таблицы (SQL ниже) и включите <strong>Authentication → Email</strong>.
+      <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:16px">Категории товаров</h3>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        ${[
+          {key:'beds',label:'Кровати',emoji:'🛏'},
+          {key:'sofas',label:'Диваны',emoji:'🛋'},
+          {key:'chairs',label:'Кресла',emoji:'🪑'},
+          {key:'sets',label:'Гарнитуры',emoji:'🏠'},
+        ].map(c=>`
+          <div style="background:var(--ivory);padding:16px;text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">${c.emoji}</div>
+            <div style="font-size:13px;font-weight:600">${c.label}</div>
+            <div style="font-size:11px;color:var(--lgray);margin-top:4px">${allProducts.filter(p=>p.cat===c.key).length} товаров</div>
+          </div>`).join('')}
       </div>
+    </div>
 
-      <h4 style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--gray)">SQL для создания таблиц (выполнить в Supabase SQL Editor):</h4>
-      <pre style="background:var(--dark);color:#a8ff78;padding:16px;font-size:12px;overflow-x:auto;margin-bottom:16px;line-height:1.7">-- Таблица товаров
-create table products (
-  id uuid default gen_random_uuid() primary key,
-  name text not null,
-  cat text,
-  price integer default 0,
-  old_price integer default 0,
-  label text,
-  desc text,
-  img text,
-  in_stock boolean default true,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
-);
-
--- Таблица заказов
-create table orders (
-  id uuid default gen_random_uuid() primary key,
-  order_num text,
-  user_id uuid references auth.users,
-  user_name text,
-  user_email text,
-  phone text,
-  city text,
-  address text,
-  delivery text,
-  payment text,
-  items jsonb default '[]',
-  total integer default 0,
-  status text default 'new',
-  comment text,
-  created_at timestamptz default now()
-);
-
--- Таблица профилей пользователей
-create table profiles (
-  id uuid references auth.users primary key,
-  full_name text,
-  phone text,
-  email text,
-  role text default 'customer',
-  created_at timestamptz default now()
-);
-
--- Таблица администраторов
-create table admins (
-  id uuid references auth.users primary key,
-  granted_at timestamptz default now()
-);
-
--- Разрешения RLS (Row Level Security)
-alter table products enable row level security;
-alter table orders enable row level security;
-alter table profiles enable row level security;
-alter table admins enable row level security;
-
--- Товары: читать всем, писать только админам
-create policy "products_read" on products for select using (true);
-create policy "products_write" on products for all
-  using (exists (select 1 from admins where id = auth.uid()));
-
--- Заказы: читать и писать только админам
-create policy "orders_admin" on orders for all
-  using (exists (select 1 from admins where id = auth.uid()));
-
--- Заказы: создавать может любой авторизованный
-create policy "orders_insert" on orders for insert
-  with check (auth.uid() is not null);
-
--- Профили: свой профиль
-create policy "profiles_own" on profiles for all
-  using (id = auth.uid());
-
--- Профили: читать могут админы
-create policy "profiles_admin_read" on profiles for select
-  using (exists (select 1 from admins where id = auth.uid()));
-
--- Admins: читать могут авторизованные
-create policy "admins_read" on admins for select
-  using (auth.uid() is not null);
-
--- Добавить первого администратора (замените YOUR_USER_ID):
--- insert into admins (id) values ('YOUR_USER_ID');</pre>
-
-      <div class="info-box">
-        <strong>Демо-режим:</strong> Пока Supabase не настроен, войдите с <code>admin@qamshy.kz</code> / <code>admin123</code> для просмотра демо-данных.
+    <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+      <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:16px">Статус подключения</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--ivory)">
+          <span style="font-size:18px">🗄</span>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600">Supabase</div>
+            <div style="font-size:11px;color:var(--lgray);margin-top:2px">${SUPABASE_URL}</div>
+          </div>
+          <span style="background:#D1FAE5;color:#065F46;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px">✓ ПОДКЛЮЧЕНО</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--ivory)">
+          <span style="font-size:18px">👤</span>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600">Администратор</div>
+            <div style="font-size:11px;color:var(--lgray);margin-top:2px" id="adminEmailDisplay">—</div>
+          </div>
+          <span style="background:#D1FAE5;color:#065F46;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px">✓ АКТИВЕН</span>
+        </div>
       </div>
     </div>`;
+
+  // Show admin email
+  const u = document.getElementById('adminEmailDisplay');
+  if (u && currentAdmin) u.textContent = currentAdmin.email || '—';
 }
 
 window.saveSettings = function() {
+  const wa    = document.getElementById('set_wa')?.value?.trim();
+  const ig    = document.getElementById('set_ig')?.value?.trim();
   const kaspi = document.getElementById('set_kaspi')?.value?.trim();
-  if (kaspi) window._kaspiPhone = kaspi;
-  adToast('Настройки сохранены!');
+  const city  = document.getElementById('set_city')?.value?.trim();
+  if (wa)    { _settings.wa = wa;       localStorage.setItem('qs_wa', wa); }
+  if (ig)    { _settings.ig = ig;       localStorage.setItem('qs_ig', ig); }
+  if (kaspi) { _settings.kaspi = kaspi; localStorage.setItem('qs_kaspi', kaspi); window._kaspiPhone = kaspi; }
+  if (city)  { _settings.city = city;   localStorage.setItem('qs_city', city); }
+  adToast('✓ Настройки сохранены!');
 };
 
 // ── HELPERS ──
