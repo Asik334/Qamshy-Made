@@ -2051,9 +2051,69 @@ window.openOrderModal = function() {
   }
 })();
 
+// ── Site Content from Supabase ──
+async function loadSiteContent() {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/site_content?select=key,value`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    if (!r.ok) return;
+    const rows = await r.json();
+    if (!rows || rows.length === 0) return;
+    const c = {};
+    rows.forEach(row => { c[row.key] = row.value; });
+
+    // Hero
+    if (c.hero_badge) { const el = document.querySelector('.hero-badge'); if (el) el.textContent = c.hero_badge; }
+    if (c.hero_title) {
+      const el = document.querySelector('.hero-title');
+      if (el) el.innerHTML = c.hero_title.replace(/\n/g, '<br>').replace(/для вас/, '<em>для вас</em>');
+    }
+    if (c.hero_desc) { const el = document.querySelector('.hero-desc'); if (el) el.textContent = c.hero_desc; }
+    const trusts = document.querySelectorAll('.trust-item');
+    if (c.hero_trust1 && trusts[0]) trusts[0].innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> ${c.hero_trust1}`;
+    if (c.hero_trust2 && trusts[1]) trusts[1].innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> ${c.hero_trust2}`;
+    if (c.hero_trust3 && trusts[2]) trusts[2].innerHTML = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> ${c.hero_trust3}`;
+
+    // Promo card
+    if (c.promo_label) { const el = document.querySelector('.promo-label'); if (el) el.textContent = c.promo_label; }
+    if (c.promo_badge) { const el = document.querySelector('.promo-badge-corner'); if (el) el.innerHTML = c.promo_badge + '<br>🇰🇿'; }
+    if (c.promo_title) { const el = document.querySelector('.promo-title'); if (el) el.textContent = c.promo_title; }
+    if (c.promo_sub)   { const el = document.querySelector('.promo-sub'); if (el) el.textContent = c.promo_sub; }
+    if (c.promo_price) { const el = document.querySelector('.promo-price'); if (el) el.innerHTML = Number(c.promo_price).toLocaleString('ru-RU') + ' <span>₸</span>'; }
+    if (c.promo_old_price) { const el = document.querySelector('.promo-price-old'); if (el) el.textContent = Number(c.promo_old_price).toLocaleString('ru-RU') + ' ₸'; }
+    if (c.promo_cta)   { const el = document.querySelector('.promo-cta'); if (el) el.textContent = c.promo_cta; }
+
+    // Articles
+    const arts = document.querySelectorAll('.art-card');
+    [1,2,3].forEach((i, idx) => {
+      const card = arts[idx];
+      if (!card) return;
+      if (c[`art${i}_tag`])   { const el = card.querySelector('.art-tag'); if (el) el.textContent = c[`art${i}_tag`]; }
+      if (c[`art${i}_title`]) { const el = card.querySelector('.art-title'); if (el) el.textContent = c[`art${i}_title`]; }
+      if (c[`art${i}_meta`])  { const el = card.querySelector('.art-meta'); if (el) el.textContent = c[`art${i}_meta`]; }
+      if (c[`art${i}_url`] && c[`art${i}_url`] !== '') {
+        card.style.cursor = 'pointer';
+        card.onclick = () => window.open(c[`art${i}_url`], '_blank');
+      }
+    });
+
+    // WhatsApp links
+    if (c.wa_number) {
+      document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+        a.href = `https://wa.me/${c.wa_number}`;
+      });
+      const waBtn = document.querySelector('.wa-float');
+      if (waBtn) waBtn.href = `https://wa.me/${c.wa_number}`;
+    }
+
+  } catch(e) { console.warn('loadSiteContent error:', e); }
+}
+
 // ── Init ──
 renderCart();
 loadProducts();
+loadSiteContent();
 </script>
 
 <!-- AUTH MODAL -->
