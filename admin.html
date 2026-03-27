@@ -775,7 +775,7 @@ window.openProductModal = function(product=null) {
   document.getElementById('pm_oldprice').value = product?.old_price||'';
   document.getElementById('pm_label').value    = product?.label||'';
   document.getElementById('pm_stock').value    = String(product?.in_stock!==false);
-  document.getElementById('pm_desc').value     = product?.desc||'';
+  document.getElementById('pm_desc').value     = product?.description||'';
   document.getElementById('pm_img').value      = product?.img||'';
   document.getElementById('productModal').classList.add('open');
 };
@@ -794,7 +794,7 @@ window.saveProduct = async function() {
     old_price: parseInt(document.getElementById('pm_oldprice').value)||0,
     label:     document.getElementById('pm_label').value,
     in_stock:  document.getElementById('pm_stock').value === 'true',
-    desc:      document.getElementById('pm_desc').value.trim(),
+    description: document.getElementById('pm_desc').value.trim(),
     img:       document.getElementById('pm_img').value.trim(),
     updated_at: new Date().toISOString()
   };
@@ -1138,10 +1138,10 @@ function getDemoOrders(){return[
   {id:'demo5',order_num:'QM-005',user_name:'Зарина Нурланова',phone:'+7 708 111 9900',city:'Актобе',address:'ул. Санкибай батыра, 3',delivery:'courier',payment:'installment',items:[{name:'Диван Oslo',price:320000,qty:1},{name:'Кровать Arco Forest',price:180000,qty:1}],total:500000,status:'shipped',comment:'Цвет: пудровый',created_at:new Date(Date.now()-86400000*7).toISOString()},
 ];}
 function getDemoProducts(){return[
-  {id:'p1',name:'Кровать Arco Forest',cat:'beds',price:180000,old_price:212000,label:'hit',desc:'Велюр, лён, шенилл',in_stock:true},
-  {id:'p2',name:'Диван Oslo',cat:'sofas',price:320000,old_price:0,label:'new',desc:'',in_stock:true},
-  {id:'p3',name:'Кресло Bloom',cat:'chairs',price:95000,old_price:0,label:'',desc:'',in_stock:true},
-  {id:'p4',name:'Кровать Botanica',cat:'beds',price:215000,old_price:250000,label:'sale',desc:'Натуральный лён',in_stock:false},
+  {id:'p1',name:'Кровать Arco Forest',cat:'beds',price:180000,old_price:212000,label:'hit',description:'Велюр, лён, шенилл',in_stock:true},
+  {id:'p2',name:'Диван Oslo',cat:'sofas',price:320000,old_price:0,label:'new',description:'',in_stock:true},
+  {id:'p3',name:'Кресло Bloom',cat:'chairs',price:95000,old_price:0,label:'',description:'',in_stock:true},
+  {id:'p4',name:'Кровать Botanica',cat:'beds',price:215000,old_price:250000,label:'sale',description:'Натуральный лён',in_stock:false},
 ];}
 function getDemoUsers(){return[
   {id:'u1',full_name:'Айгерим Касымова',email:'aigeim@mail.ru',phone:'+7 701 123 4567',role:'customer',created_at:new Date(Date.now()-86400000*30).toISOString()},
