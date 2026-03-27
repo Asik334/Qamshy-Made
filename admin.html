@@ -374,8 +374,20 @@ input,select,textarea{font-family:var(--sans)}
         <textarea id="pm_desc" placeholder="Краткое описание товара..."></textarea>
       </div>
       <div class="form-field full">
-        <label>URL изображения (необязательно)</label>
-        <input type="text" id="pm_img" placeholder="https://...">
+        <label>Фото товара</label>
+        <div id="imgUploadArea" onclick="document.getElementById('pm_img_file').click()" style="border:2px dashed var(--stone);padding:20px;text-align:center;cursor:pointer;transition:border-color .2s;position:relative;min-height:100px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px">
+          <div id="imgPreview" style="display:none;width:100%;text-align:center">
+            <img id="imgPreviewImg" src="" style="max-height:160px;max-width:100%;object-fit:contain">
+          </div>
+          <div id="imgPlaceholder">
+            <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:var(--lgray);fill:none;margin:0 auto 8px;display:block"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div style="font-size:13px;color:var(--lgray)">Нажмите чтобы выбрать фото</div>
+            <div style="font-size:11px;color:var(--lgray);margin-top:4px">JPG, PNG, WEBP до 2 МБ</div>
+          </div>
+          <button type="button" id="imgRemoveBtn" onclick="removeImg(event)" style="display:none;position:absolute;top:8px;right:8px;background:var(--red);color:#fff;border:none;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">✕</button>
+        </div>
+        <input type="file" id="pm_img_file" accept="image/*" style="display:none" onchange="handleImgUpload(this)">
+        <input type="hidden" id="pm_img">
       </div>
     </div>
     <div class="modal-actions">
@@ -776,7 +788,7 @@ window.openProductModal = function(product=null) {
   document.getElementById('pm_label').value    = product?.label||'';
   document.getElementById('pm_stock').value    = String(product?.in_stock!==false);
   document.getElementById('pm_desc').value     = product?.description||'';
-  document.getElementById('pm_img').value      = product?.img||'';
+  resetImgUpload(product?.img||'');
   document.getElementById('productModal').classList.add('open');
 };
 window.closeProductModal = () => document.getElementById('productModal').classList.remove('open');
@@ -785,6 +797,53 @@ window.editProduct = function(id) {
   const p = allProducts.find(x=>x.id===id);
   if (p) openProductModal(p);
 };
+
+window.handleImgUpload = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { adToast('Файл слишком большой (макс. 2 МБ)'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    document.getElementById('pm_img').value = base64;
+    document.getElementById('imgPreviewImg').src = base64;
+    document.getElementById('imgPreview').style.display = 'block';
+    document.getElementById('imgPlaceholder').style.display = 'none';
+    document.getElementById('imgRemoveBtn').style.display = 'block';
+    document.getElementById('imgUploadArea').style.borderColor = 'var(--forest)';
+  };
+  reader.readAsDataURL(file);
+};
+
+window.removeImg = function(e) {
+  e.stopPropagation();
+  document.getElementById('pm_img').value = '';
+  document.getElementById('pm_img_file').value = '';
+  document.getElementById('imgPreviewImg').src = '';
+  document.getElementById('imgPreview').style.display = 'none';
+  document.getElementById('imgPlaceholder').style.display = 'block';
+  document.getElementById('imgRemoveBtn').style.display = 'none';
+  document.getElementById('imgUploadArea').style.borderColor = 'var(--stone)';
+};
+
+function resetImgUpload(existingImg) {
+  const val = existingImg || '';
+  document.getElementById('pm_img').value = val;
+  document.getElementById('pm_img_file').value = '';
+  if (val) {
+    document.getElementById('imgPreviewImg').src = val;
+    document.getElementById('imgPreview').style.display = 'block';
+    document.getElementById('imgPlaceholder').style.display = 'none';
+    document.getElementById('imgRemoveBtn').style.display = 'block';
+    document.getElementById('imgUploadArea').style.borderColor = 'var(--forest)';
+  } else {
+    document.getElementById('imgPreviewImg').src = '';
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('imgPlaceholder').style.display = 'block';
+    document.getElementById('imgRemoveBtn').style.display = 'none';
+    document.getElementById('imgUploadArea').style.borderColor = 'var(--stone)';
+  }
+}
 
 window.saveProduct = async function() {
   const data = {
