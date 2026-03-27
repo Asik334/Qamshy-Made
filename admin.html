@@ -300,6 +300,10 @@ input,select,textarea{font-family:var(--sans)}
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
       <span>Аналитика</span>
     </div>
+    <div class="sidebar-item" onclick="showPage('content')">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <span>Контент</span>
+    </div>
     <div class="sidebar-item" onclick="showPage('settings')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span>Настройки</span>
@@ -562,6 +566,7 @@ async function loadAll() {
     allOrders   = await oTbl.select('*', { order:'created_at.desc' });
     allProducts = await pTbl.select('*');
     allUsers    = await uTbl.select('*');
+    await loadContent();
   } catch(e) {
     adToast('Ошибка загрузки данных: ' + (e.message||e));
     allOrders=getDemoOrders(); allProducts=getDemoProducts(); allUsers=getDemoUsers();
@@ -571,15 +576,16 @@ async function loadAll() {
 // ── PAGES ──
 window.showPage = function(page) {
   document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
-  const map={dashboard:0,orders:1,products:2,users:3,analytics:4,settings:5};
+  const map={dashboard:0,orders:1,products:2,users:3,analytics:4,content:5,settings:6};
   const items=document.querySelectorAll('.sidebar-item');
-  if (items[map[page]]) items[map[page]].classList.add('active');
+  if (items[map[page]] !== undefined) items[map[page]].classList.add('active');
   const main = document.getElementById('mainContent');
   if (page==='dashboard')  renderDashboard(main);
   else if (page==='orders')    renderOrders(main);
   else if (page==='products')  renderProducts(main);
   else if (page==='users')     renderUsers(main);
   else if (page==='analytics') renderAnalytics(main);
+  else if (page==='content')   renderContent(main);
   else if (page==='settings')  renderSettings(main);
 };
 
@@ -1033,6 +1039,241 @@ function renderAnalytics(el) {
       </div>
     </div>` : ''}`;
 }
+
+// ── CONTENT EDITOR ──
+let _content = {};
+
+async function loadContent() {
+  try {
+    if (authToken && authToken !== 'demo') {
+      const t = await sb.from('site_content', authToken);
+      const rows = await t.select('*');
+      if (rows && rows.length > 0) {
+        rows.forEach(r => { _content[r.key] = r.value; });
+      }
+    }
+  } catch(e) { console.warn('loadContent:', e); }
+}
+
+async function saveContentKey(key, value) {
+  try {
+    if (authToken && authToken !== 'demo') {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/site_content?key=eq.${encodeURIComponent(key)}`, {
+        method: 'GET',
+        headers: sb.authHeaders(authToken)
+      });
+      const existing = await r.json();
+      if (existing && existing.length > 0) {
+        await fetch(`${SUPABASE_URL}/rest/v1/site_content?key=eq.${encodeURIComponent(key)}`, {
+          method: 'PATCH',
+          headers: { ...sb.authHeaders(authToken), 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ value, updated_at: new Date().toISOString() })
+        });
+      } else {
+        await fetch(`${SUPABASE_URL}/rest/v1/site_content`, {
+          method: 'POST',
+          headers: { ...sb.authHeaders(authToken), 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ key, value, updated_at: new Date().toISOString() })
+        });
+      }
+    }
+    _content[key] = value;
+  } catch(e) { throw e; }
+}
+
+function cv(key, fallback='') {
+  return (_content[key] !== undefined ? _content[key] : fallback)
+    .replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+}
+
+function renderContent(el) {
+  el.innerHTML = `
+    <div class="page-header">
+      <div><div class="page-title">Контент сайта</div><div class="page-sub">Редактирование текстов и акций</div></div>
+      <a href="/" target="_blank" class="btn btn-outline btn-sm">↗ Открыть сайт</a>
+    </div>
+
+    <div class="tabs" id="contentTabs">
+      <div class="tab active" onclick="switchContentTab(this,'promo')">🎯 Акция / Hero</div>
+      <div class="tab" onclick="switchContentTab(this,'hero')">🏠 Главный текст</div>
+      <div class="tab" onclick="switchContentTab(this,'articles')">📰 Статьи журнала</div>
+      <div class="tab" onclick="switchContentTab(this,'contacts')">📞 Контакты</div>
+    </div>
+
+    <div id="contentTabBody"></div>`;
+
+  renderContentTab('promo');
+}
+
+window.switchContentTab = function(el, tab) {
+  document.querySelectorAll('#contentTabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderContentTab(tab);
+};
+
+function renderContentTab(tab) {
+  const body = document.getElementById('contentTabBody');
+  if (!body) return;
+
+  if (tab === 'promo') {
+    body.innerHTML = `
+      <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:6px">Карточка акции (справа на главной)</h3>
+        <p style="font-size:12px;color:var(--lgray);margin-bottom:20px">Отображается в зелёном блоке рядом с заголовком</p>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Метка (напр. «Акция · Апрель 2026»)</label>
+            <input type="text" id="c_promo_label" value="${cv('promo_label','Акция · Апрель 2026')}">
+          </div>
+          <div class="form-field">
+            <label>Значок скидки (напр. «−15%»)</label>
+            <input type="text" id="c_promo_badge" value="${cv('promo_badge','−15%')}">
+          </div>
+          <div class="form-field full">
+            <label>Название товара в акции</label>
+            <input type="text" id="c_promo_title" value="${cv('promo_title','Кровать «Arco Forest»')}">
+          </div>
+          <div class="form-field full">
+            <label>Подзаголовок (материалы, описание)</label>
+            <input type="text" id="c_promo_sub" value="${cv('promo_sub','Велюр · Лён · Шенилл')}">
+          </div>
+          <div class="form-field">
+            <label>Старая цена (₸)</label>
+            <input type="number" id="c_promo_old_price" value="${cv('promo_old_price','212000')}">
+          </div>
+          <div class="form-field">
+            <label>Новая цена (₸)</label>
+            <input type="number" id="c_promo_price" value="${cv('promo_price','180000')}">
+          </div>
+          <div class="form-field full">
+            <label>Текст кнопки</label>
+            <input type="text" id="c_promo_cta" value="${cv('promo_cta','Заказать сейчас')}">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="saveContentSection('promo')">💾 Сохранить акцию</button>
+      </div>`;
+  }
+
+  else if (tab === 'hero') {
+    body.innerHTML = `
+      <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:6px">Главный заголовок</h3>
+        <p style="font-size:12px;color:var(--lgray);margin-bottom:20px">Крупный текст в левой части главной страницы</p>
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>Бейдж (маленький текст над заголовком)</label>
+            <input type="text" id="c_hero_badge" value="${cv('hero_badge','Кастом мебель · Актобе')}">
+          </div>
+          <div class="form-field full">
+            <label>Заголовок H1 (используйте \\n для переноса строки)</label>
+            <textarea id="c_hero_title" style="min-height:80px">${cv('hero_title','Мягкая мебель,\nсделанная для вас\nв Казахстане')}</textarea>
+          </div>
+          <div class="form-field full">
+            <label>Описание под заголовком</label>
+            <textarea id="c_hero_desc" style="min-height:80px">${cv('hero_desc','Кровати и диваны под заказ — любой размер, цвет, ткань. Производство в Актобе. Доставка по всему Казахстану.')}</textarea>
+          </div>
+          <div class="form-field">
+            <label>Факт 1 (напр. «300+ заказов»)</label>
+            <input type="text" id="c_hero_trust1" value="${cv('hero_trust1','300+ заказов')}">
+          </div>
+          <div class="form-field">
+            <label>Факт 2</label>
+            <input type="text" id="c_hero_trust2" value="${cv('hero_trust2','Гарантия 2 года')}">
+          </div>
+          <div class="form-field full">
+            <label>Факт 3</label>
+            <input type="text" id="c_hero_trust3" value="${cv('hero_trust3','Срок 14–21 день')}">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="saveContentSection('hero')">💾 Сохранить заголовок</button>
+      </div>`;
+  }
+
+  else if (tab === 'articles') {
+    body.innerHTML = `
+      <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:6px">Статьи журнала</h3>
+        <p style="font-size:12px;color:var(--lgray);margin-bottom:20px">3 статьи в разделе «Журнал о мебели»</p>
+        ${[1,2,3].map(i=>`
+        <div style="border:1px solid var(--stone);padding:20px;margin-bottom:16px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--forest);margin-bottom:14px">Статья ${i}</div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label>Тег (напр. «Тренды · 2026»)</label>
+              <input type="text" id="c_art${i}_tag" value="${cv(`art${i}_tag`, ['Тренды · 2026','Дизайн','Советы'][i-1])}">
+            </div>
+            <div class="form-field">
+              <label>Дата и время чтения</label>
+              <input type="text" id="c_art${i}_meta" value="${cv(`art${i}_meta`, ['15 марта 2026 · 7 мин чтения','8 марта 2026 · 5 мин','1 марта 2026 · 4 мин'][i-1])}">
+            </div>
+            <div class="form-field full">
+              <label>Заголовок статьи</label>
+              <input type="text" id="c_art${i}_title" value="${cv(`art${i}_title`, ['5 трендов мягкой мебели в 2026 году, которые делают интерьер дороже','Как выбрать цвет кровати под интерьер','5 идей для маленькой гостиной: диван, который не ест пространство'][i-1])}">
+            </div>
+            <div class="form-field full">
+              <label>Ссылка на статью (необязательно)</label>
+              <input type="text" id="c_art${i}_url" placeholder="https://..." value="${cv(`art${i}_url`,'')}">
+            </div>
+          </div>
+        </div>`).join('')}
+        <button class="btn btn-primary" onclick="saveContentSection('articles')">💾 Сохранить статьи</button>
+      </div>`;
+  }
+
+  else if (tab === 'contacts') {
+    body.innerHTML = `
+      <div class="table-card" style="padding:28px 24px;margin-bottom:16px">
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:6px">Контактная информация</h3>
+        <p style="font-size:12px;color:var(--lgray);margin-bottom:20px">Отображается в футере и блоке контактов</p>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Номер WhatsApp (только цифры)</label>
+            <input type="text" id="c_wa" value="${cv('wa_number','77718431358')}" placeholder="77012345678">
+          </div>
+          <div class="form-field">
+            <label>Instagram</label>
+            <input type="text" id="c_instagram" value="${cv('instagram','@qamshy.made')}">
+          </div>
+          <div class="form-field">
+            <label>Kaspi номер для оплаты</label>
+            <input type="text" id="c_kaspi" value="${cv('kaspi_phone','+7 (771) 843-13-58')}">
+          </div>
+          <div class="form-field">
+            <label>Город</label>
+            <input type="text" id="c_city" value="${cv('city','Актобе')}">
+          </div>
+          <div class="form-field full">
+            <label>Адрес / описание местоположения</label>
+            <input type="text" id="c_address" value="${cv('address','Казахстан, Актобе')}">
+          </div>
+          <div class="form-field full">
+            <label>Режим работы</label>
+            <input type="text" id="c_hours" value="${cv('hours','Пн–Вс: 9:00–20:00')}">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="saveContentSection('contacts')">💾 Сохранить контакты</button>
+      </div>`;
+  }
+}
+
+window.saveContentSection = async function(section) {
+  const fields = {
+    promo: ['promo_label','promo_badge','promo_title','promo_sub','promo_old_price','promo_price','promo_cta'],
+    hero:  ['hero_badge','hero_title','hero_desc','hero_trust1','hero_trust2','hero_trust3'],
+    articles: ['art1_tag','art1_meta','art1_title','art1_url','art2_tag','art2_meta','art2_title','art2_url','art3_tag','art3_meta','art3_title','art3_url'],
+    contacts: ['wa_number','instagram','kaspi_phone','city','address','hours'],
+  };
+  const keys = fields[section] || [];
+  try {
+    for (const key of keys) {
+      const el = document.getElementById('c_' + key);
+      if (el) await saveContentKey(key, el.value.trim());
+    }
+    adToast('✓ Сохранено! Изменения появятся на сайте.');
+  } catch(e) {
+    adToast('Ошибка: ' + (e.message || JSON.stringify(e)));
+  }
+};
 
 // ── SETTINGS ──
 const _settings = {
