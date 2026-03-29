@@ -127,7 +127,7 @@ CREATE POLICY "admins_write" ON admins FOR ALL
 4. Перейдите: **SQL Editor** → **New query**, выполните:
 
 ```sql
-INSERT INTO admins (id) VALUES ('ВСТАВЬТЕ-UID-СЮДА');
+INSERT INTO admins (id) VALUES ('07758d05-e53b-49e5-953b-42a4553adb71');
 ```
 
 ### 1.5 Получить ключи API

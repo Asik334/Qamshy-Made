@@ -3,6 +3,10 @@
   "routes": [
     { "src": "/admin", "dest": "/admin.html" },
     { "src": "/admin.html", "dest": "/admin.html" },
+    { "src": "/catalog", "dest": "/catalog.html" },
+    { "src": "/catalog.html", "dest": "/catalog.html" },
+    { "src": "/categories", "dest": "/categories.html" },
+    { "src": "/categories.html", "dest": "/categories.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

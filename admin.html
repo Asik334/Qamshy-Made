@@ -563,9 +563,14 @@ async function loadAll() {
       sb.from('products', authToken),
       sb.from('profiles', authToken)
     ]);
-    allOrders   = await oTbl.select('*', { order:'created_at.desc' });
-    allProducts = await pTbl.select('*');
-    allUsers    = await uTbl.select('*');
+    const [orders, products, users] = await Promise.all([
+      oTbl.select('*', { order:'created_at.desc' }),
+      pTbl.select('*'),
+      uTbl.select('*')
+    ]);
+    allOrders   = orders   || [];
+    allProducts = products || [];
+    allUsers    = users    || [];
     await loadContent();
   } catch(e) {
     adToast('Ошибка загрузки данных: ' + (e.message||e));
@@ -1361,7 +1366,12 @@ window.saveSettings = function() {
   const city  = document.getElementById('set_city')?.value?.trim();
   if (wa)    { _settings.wa = wa;       localStorage.setItem('qs_wa', wa); }
   if (ig)    { _settings.ig = ig;       localStorage.setItem('qs_ig', ig); }
-  if (kaspi) { _settings.kaspi = kaspi; localStorage.setItem('qs_kaspi', kaspi); window._kaspiPhone = kaspi; }
+  if (kaspi) {
+    _settings.kaspi = kaspi;
+    localStorage.setItem('qs_kaspi', kaspi);
+    window._kaspiPhone = kaspi;
+    window._kaspiPhoneDigits = kaspi.replace(/\D/g,'');
+  }
   if (city)  { _settings.city = city;   localStorage.setItem('qs_city', city); }
   adToast('✓ Настройки сохранены!');
 };

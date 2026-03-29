@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Все категории — Qamshy Made</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F7F4F0;--white:#FFFFFF;--ivory:#EDE8E1;--stone:#DDD8D0;
+  --forest:#2B4A3C;--gold:#B5936A;--dark:#1C1917;--gray:#6B6460;--lgray:#9A9A96;
+  --serif:'Playfair Display',serif;--sans:'Mulish',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--dark);font-weight:300;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* TOP BAR */
+.topbar{background:var(--forest);padding:10px 0;text-align:center;font-size:12px;font-weight:500;letter-spacing:1.5px;color:rgba(255,255,255,0.85)}
+.topbar span{color:var(--gold)}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--stone);position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.nav-top{display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:72px}
+.nav-logo{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--dark)}
+.nav-logo span{color:var(--forest)}
+.nav-back{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--forest);letter-spacing:0.5px}
+.nav-back svg{width:18px;height:18px;stroke:var(--forest);fill:none}
+.nav-back:hover{opacity:.75}
+
+/* HERO */
+.cat-hero{
+  background:linear-gradient(135deg,var(--forest) 0%,#1C2E27 100%);
+  padding:64px 60px 54px;
+  display:flex;align-items:center;justify-content:space-between;gap:40px;
+}
+.cat-hero-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.cat-hero-title{font-family:var(--serif);font-size:clamp(34px,4.5vw,56px);font-weight:400;color:#fff;line-height:1.12;margin-bottom:16px}
+.cat-hero-title em{font-style:italic;color:var(--gold)}
+.cat-hero-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.8;max-width:440px}
+.cat-hero-badges{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.cat-hero-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.75);font-size:11px;font-weight:500;letter-spacing:1px;padding:8px 18px;border-radius:24px}
+.cat-hero-visual{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0;width:240px}
+.mini-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:10px;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:10px;font-size:10px;font-weight:500;color:rgba(255,255,255,0.65);text-align:center;cursor:pointer;transition:background .2s}
+.mini-box:hover{background:rgba(255,255,255,0.13)}
+
+/* MAIN */
+main{max-width:1320px;margin:0 auto;padding:52px 60px 80px}
+
+/* SEARCH */
+.cat-search{display:flex;align-items:center;background:var(--white);border:1.5px solid var(--stone);border-radius:10px;padding:0 18px;height:48px;gap:10px;max-width:420px;margin-bottom:44px;transition:border-color .2s}
+.cat-search:focus-within{border-color:var(--forest)}
+.cat-search input{flex:1;border:none;outline:none;font-family:var(--sans);font-size:14px;background:transparent;color:var(--dark)}
+.cat-search input::placeholder{color:var(--lgray)}
+.cat-search svg{width:16px;height:16px;stroke:var(--lgray);fill:none;flex-shrink:0}
+
+/* SECTION */
+.cat-section{margin-bottom:52px}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:14px;border-bottom:2px solid var(--stone)}
+.sec-hd-title{font-size:18px;font-weight:700;color:var(--dark)}
+.sec-hd-count{font-size:12px;color:var(--lgray)}
+
+/* GRID */
+.cats-grid-page{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+
+/* CARD */
+.cat-card-page{cursor:pointer;background:var(--white);border:1.5px solid var(--stone);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;transition:border-color .25s,box-shadow .25s,transform .25s}
+.cat-card-page:hover{border-color:var(--gold);box-shadow:0 6px 24px rgba(0,0,0,0.09);transform:translateY(-3px)}
+.cat-card-page:hover .ccimg svg{transform:scale(1.07)}
+.ccname{font-size:13px;font-weight:700;color:var(--dark);padding:16px 16px 3px}
+.ccsub{font-size:11px;color:var(--lgray);padding:0 16px 8px}
+.ccimg{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 16px 16px;min-height:130px}
+.ccimg svg{transition:transform .4s ease;max-width:100%;max-height:120px}
+.cctag{margin:0 16px 14px;display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:20px;width:fit-content}
+.cctag.hot{background:#FFF0E8;color:#C45C1A}
+.cctag.new{background:#E8F2EE;color:var(--forest)}
+
+/* PROMO CARD */
+.promo-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.promo-card-horiz{background:var(--white);border:1.5px solid var(--stone);border-radius:14px;display:flex;align-items:center;padding:24px;gap:24px;cursor:pointer;transition:border-color .25s,transform .25s}
+.promo-card-horiz:hover{border-color:var(--gold);transform:translateY(-2px)}
+.promo-card-dark{background:linear-gradient(135deg,var(--forest),#1C2E27);border-radius:14px;padding:32px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .25s}
+.promo-card-dark:hover{transform:translateY(-2px)}
+
+/* FOOTER */
+.page-footer{background:var(--dark);color:rgba(255,255,255,0.45);text-align:center;padding:30px;font-size:12px;letter-spacing:0.5px}
+.page-footer a{color:var(--gold)}
+
+@media(max-width:1100px){.cats-grid-page{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:860px){
+  .cats-grid-page{grid-template-columns:repeat(3,1fr)}
+  .promo-row{grid-template-columns:1fr}
+  main{padding:32px 20px 60px}
+  .cat-hero{padding:40px 20px 36px;flex-direction:column}
+  .cat-hero-visual{display:none}
+  .nav-top{padding:0 16px}
+}
+@media(max-width:560px){.cats-grid-page{grid-template-columns:repeat(2,1fr);gap:10px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">Актобе, Казахстан &nbsp;·&nbsp; <span>Бесплатная консультация в WhatsApp</span> &nbsp;·&nbsp; Доставка по всему КZ</div>
+
+<nav>
+  <div class="nav-top">
+    <a class="nav-logo" href="index.html">Qamshy <span>Made</span></a>
+    <a class="nav-back" href="index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Назад на главную
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="cat-hero">
+  <div>
+    <div class="cat-hero-label">Каталог &nbsp;·&nbsp; Qamshy Made</div>
+    <h1 class="cat-hero-title">Все <em>категории</em><br>мебели</h1>
+    <p class="cat-hero-sub">Кастомная мягкая мебель под заказ в Актобе. Любой размер, ткань и цвет. Производство в Казахстане.</p>
+    <div class="cat-hero-badges">
+      <span class="cat-hero-badge">✦ 300+ заказов</span>
+      <span class="cat-hero-badge">✦ Гарантия 2 года</span>
+      <span class="cat-hero-badge">✦ Рассрочка 0%</span>
+    </div>
+  </div>
+  <div class="cat-hero-visual">
+    <div class="mini-box"><svg viewBox="0 0 44 36" width="36"><rect x="2" y="16" width="40" height="12" rx="3" fill="#9E8468"/><rect x="4" y="8" width="10" height="10" rx="2" fill="#B5936A"/><rect x="18" y="8" width="10" height="10" rx="2" fill="#B5936A"/><rect x="30" y="8" width="10" height="10" rx="2" fill="#B5936A"/></svg>Диваны</div>
+    <div class="mini-box"><svg viewBox="0 0 44 36" width="36"><rect x="2" y="16" width="40" height="12" rx="3" fill="#9E8468"/><rect x="2" y="10" width="40" height="8" rx="2" fill="#B5936A" opacity=".6"/><rect x="5" y="16" width="14" height="8" rx="3" fill="#EDE8E1"/><rect x="25" y="16" width="14" height="8" rx="3" fill="#DDD8D0"/></svg>Кровати</div>
+    <div class="mini-box"><svg viewBox="0 0 40 44" width="28"><rect x="10" y="4" width="20" height="28" rx="3" fill="#e8e4de"/><line x1="20" y1="4" x2="20" y2="32" stroke="#C9C0B4" stroke-width="1.5"/><circle cx="15" cy="18" r="2.5" fill="#9E8468"/><circle cx="25" cy="18" r="2.5" fill="#9E8468"/></svg>Шкафы</div>
+    <div class="mini-box"><svg viewBox="0 0 40 44" width="28"><rect x="8" y="10" width="24" height="20" rx="3" fill="#7a7a7a"/><rect x="10" y="13" width="20" height="5" rx="2" fill="#888"/><rect x="10" y="21" width="20" height="5" rx="2" fill="#888"/><circle cx="20" cy="16" r="2" fill="#9E8468"/><circle cx="20" cy="24" r="2" fill="#9E8468"/></svg>Комоды</div>
+  </div>
+</div>
+
+<main>
+
+  <!-- Search -->
+  <div class="cat-search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="Поиск по категориям..." id="catSearch" oninput="filterCats(this.value)">
+  </div>
+
+  <!-- МЯГКАЯ МЕБЕЛЬ -->
+  <div class="cat-section">
+    <div class="sec-hd"><div class="sec-hd-title">Мягкая мебель</div><span class="sec-hd-count">4 категории</span></div>
+    <div class="cats-grid-page">
+
+      <div class="cat-card-page" onclick="location='catalog.html?cat=sofas'">
+        <div class="ccname">Диваны</div><div class="ccsub">Угловые, прямые, модульные</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="60" width="180" height="55" rx="10" fill="#8B7355"/><rect x="18" y="40" width="50" height="46" rx="8" fill="#9E8468"/><rect x="80" y="40" width="50" height="46" rx="8" fill="#9E8468"/><rect x="142" y="40" width="48" height="46" rx="8" fill="#9E8468"/><rect x="10" y="72" width="30" height="38" rx="8" fill="#7A644A"/><rect x="160" y="72" width="30" height="38" rx="8" fill="#7A644A"/><rect x="28" y="115" width="10" height="16" rx="3" fill="#4A3728"/><rect x="162" y="115" width="10" height="16" rx="3" fill="#4A3728"/></svg></div>
+        <span class="cctag hot">Хит продаж</span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html?cat=beds'">
+        <div class="ccname">Кровати</div><div class="ccsub">С подъёмным механизмом, без</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="75" width="180" height="42" rx="6" fill="#9E8468"/><rect x="10" y="55" width="180" height="24" rx="4" fill="#B5936A" opacity=".6"/><rect x="10" y="40" width="180" height="18" rx="8" fill="#8B7355"/><rect x="24" y="75" width="62" height="30" rx="8" fill="#EDE8E1" opacity=".9"/><rect x="114" y="75" width="62" height="30" rx="8" fill="#DDD8D0" opacity=".85"/><rect x="18" y="117" width="10" height="14" rx="3" fill="#4A3728"/><rect x="172" y="117" width="10" height="14" rx="3" fill="#4A3728"/></svg></div>
+        <span class="cctag hot">Хит продаж</span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html?cat=chairs'">
+        <div class="ccname">Кресла</div><div class="ccsub">Для гостиной, спальни, кабинета</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="20" width="80" height="65" rx="12" fill="#d4cbbe"/><rect x="65" y="70" width="70" height="20" rx="6" fill="#c8bfb0"/><rect x="64" y="56" width="14" height="40" rx="6" fill="#d4cbbe" opacity=".8"/><rect x="122" y="56" width="14" height="40" rx="6" fill="#d4cbbe" opacity=".8"/><rect x="72" y="90" width="8" height="36" rx="3" fill="#9E8468"/><rect x="120" y="90" width="8" height="36" rx="3" fill="#9E8468"/><rect x="60" y="122" width="28" height="5" rx="2" fill="#7A644A"/><rect x="112" y="122" width="28" height="5" rx="2" fill="#7A644A"/></svg></div>
+        <span class="cctag new">Новинки</span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html'">
+        <div class="ccname">Пуфы</div><div class="ccsub">Круглые, квадратные, пуф-столик</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="80" rx="70" ry="30" fill="#c8bfb0"/><ellipse cx="100" cy="72" rx="70" ry="28" fill="#d4cbbe"/><ellipse cx="100" cy="65" rx="68" ry="22" fill="#e0d8cc"/><rect x="55" y="100" width="10" height="20" rx="3" fill="#9E8468"/><rect x="135" y="100" width="10" height="20" rx="3" fill="#9E8468"/><rect x="75" y="105" width="10" height="16" rx="3" fill="#9E8468"/><rect x="115" y="105" width="10" height="16" rx="3" fill="#9E8468"/></svg></div>
+        <span class="cctag"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- СПАЛЬНЯ -->
+  <div class="cat-section">
+    <div class="sec-hd"><div class="sec-hd-title">Спальня и матрасы</div><span class="sec-hd-count">3 категории</span></div>
+    <div class="cats-grid-page">
+
+      <div class="cat-card-page" onclick="location='catalog.html'">
+        <div class="ccname">Матрасы</div><div class="ccsub">Пружинные, пенные, латекс</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="55" width="160" height="50" rx="8" fill="#e8e8e8"/><rect x="20" y="55" width="160" height="12" rx="4" fill="#fff" opacity=".7"/><rect x="20" y="83" width="160" height="22" fill="#B5936A" opacity=".3"/><line x1="50" y1="67" x2="50" y2="93" stroke="#B5936A" stroke-width="2"/><line x1="80" y1="67" x2="80" y2="93" stroke="#B5936A" stroke-width="2"/><line x1="110" y1="67" x2="110" y2="93" stroke="#B5936A" stroke-width="2"/><line x1="140" y1="67" x2="140" y2="93" stroke="#B5936A" stroke-width="2"/><rect x="20" y="93" width="160" height="12" rx="4" fill="#ccc" opacity=".6"/></svg></div>
+        <span class="cctag"></span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html'">
+        <div class="ccname">Тумбы</div><div class="ccsub">Прикроватные, под ТВ</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="50" y="45" width="100" height="72" rx="6" fill="#5a5a5a"/><rect x="55" y="50" width="90" height="30" rx="4" fill="#666"/><rect x="55" y="84" width="90" height="28" rx="4" fill="#666"/><circle cx="100" cy="66" r="4" fill="#9E8468"/><circle cx="100" cy="98" r="4" fill="#9E8468"/><rect x="58" y="117" width="10" height="10" rx="2" fill="#3a3a3a"/><rect x="132" y="117" width="10" height="10" rx="2" fill="#3a3a3a"/></svg></div>
+        <span class="cctag"></span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html?cat=chairs'">
+        <div class="ccname">Стулья</div><div class="ccsub">Мягкие, обеденные, барные</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="20" width="80" height="65" rx="12" fill="#d4cbbe"/><rect x="65" y="70" width="70" height="20" rx="6" fill="#c8bfb0"/><rect x="64" y="56" width="14" height="40" rx="6" fill="#d4cbbe" opacity=".8"/><rect x="122" y="56" width="14" height="40" rx="6" fill="#d4cbbe" opacity=".8"/><rect x="72" y="90" width="8" height="36" rx="3" fill="#9E8468"/><rect x="120" y="90" width="8" height="36" rx="3" fill="#9E8468"/><rect x="60" y="122" width="28" height="5" rx="2" fill="#7A644A"/><rect x="112" y="122" width="28" height="5" rx="2" fill="#7A644A"/></svg></div>
+        <span class="cctag new">Новинки</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ХРАНЕНИЕ -->
+  <div class="cat-section">
+    <div class="sec-hd"><div class="sec-hd-title">Хранение</div><span class="sec-hd-count">3 категории</span></div>
+    <div class="cats-grid-page">
+
+      <div class="cat-card-page" onclick="location='catalog.html'">
+        <div class="ccname">Шкафы</div><div class="ccsub">Купе, распашные, встроенные</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="20" width="120" height="108" rx="4" fill="#e8e4de"/><line x1="100" y1="20" x2="100" y2="128" stroke="#C9C0B4" stroke-width="2"/><rect x="44" y="24" width="52" height="100" rx="2" fill="#DDD8D0"/><rect x="104" y="24" width="52" height="100" rx="2" fill="#DDD8D0"/><circle cx="88" cy="75" r="4" fill="#9E8468"/><circle cx="112" cy="75" r="4" fill="#9E8468"/><rect x="36" y="20" width="8" height="108" rx="2" fill="#C9C0B4"/><rect x="156" y="20" width="8" height="108" rx="2" fill="#C9C0B4"/></svg></div>
+        <span class="cctag"></span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html'">
+        <div class="ccname">Комоды</div><div class="ccsub">3–5 ящиков, разные ширины</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="30" width="140" height="96" rx="6" fill="#7a7a7a"/><rect x="35" y="35" width="130" height="26" rx="4" fill="#888"/><rect x="35" y="65" width="130" height="26" rx="4" fill="#888"/><rect x="35" y="95" width="130" height="26" rx="4" fill="#888"/><circle cx="100" cy="48" r="5" fill="#9E8468"/><circle cx="100" cy="78" r="5" fill="#9E8468"/><circle cx="100" cy="108" r="5" fill="#9E8468"/><rect x="40" y="126" width="10" height="8" rx="2" fill="#4a4a4a"/><rect x="150" y="126" width="10" height="8" rx="2" fill="#4a4a4a"/></svg></div>
+        <span class="cctag"></span>
+      </div>
+
+      <div class="cat-card-page" onclick="location='catalog.html'">
+        <div class="ccname">Стенки</div><div class="ccsub">Горки, стенки под ТВ</div>
+        <div class="ccimg"><svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="90" width="180" height="38" rx="4" fill="#9E8468"/><rect x="10" y="90" width="85" height="38" rx="4" fill="#8B7355"/><line x1="97" y1="90" x2="97" y2="128" stroke="#EDE8E1" stroke-width="2"/><rect x="105" y="90" width="85" height="38" rx="4" fill="#9E8468"/><rect x="90" y="40" width="20" height="54" rx="3" fill="#7A644A"/><rect x="115" y="30" width="75" height="64" rx="4" fill="#6B5740"/><rect x="120" y="35" width="65" height="45" rx="2" fill="#1C1917" opacity=".85"/><rect x="18" y="95" width="28" height="12" rx="2" fill="#EDE8E1" opacity=".6"/><rect x="50" y="95" width="28" height="12" rx="2" fill="#EDE8E1" opacity=".6"/></svg></div>
+        <span class="cctag"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- АКЦИИ -->
+  <div class="cat-section">
+    <div class="sec-hd"><div class="sec-hd-title">Акции и спецпредложения</div><span class="sec-hd-count">2 предложения</span></div>
+    <div class="promo-row">
+
+      <div class="promo-card-horiz" onclick="location='catalog.html'">
+        <svg viewBox="0 0 160 140" width="110" xmlns="http://www.w3.org/2000/svg"><circle cx="72" cy="78" r="44" fill="#1C1917"/><path d="M72 34 L80 56 L104 56 L85 70 L92 92 L72 78 L52 92 L59 70 L40 56 L64 56 Z" fill="#B5936A"/><text x="63" y="85" font-size="22" font-weight="800" fill="#fff" font-family="sans-serif">%</text><circle cx="104" cy="44" r="18" fill="#B5936A"/><text x="97" y="50" font-size="16" fill="#fff" font-family="sans-serif">🔔</text></svg>
+        <div>
+          <div class="ccname" style="padding:0 0 4px">Скидки и акции</div>
+          <div class="ccsub" style="padding:0 0 14px">До −25% на избранные модели</div>
+          <span class="cctag hot" style="margin:0">Актуально сейчас</span>
+        </div>
+      </div>
+
+      <div class="promo-card-dark" onclick="location='index.html#installment'">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Финансирование</div>
+        <div style="font-family:var(--serif);font-size:32px;color:#fff;font-weight:400;line-height:1.2;margin-bottom:10px">Рассрочка<br><em style="color:var(--gold)">0%</em></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:22px">Каспи, Халык, Freedom — до 24 месяцев</div>
+        <span style="background:var(--gold);color:var(--dark);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 22px;display:inline-block;width:fit-content;border-radius:4px">Узнать условия →</span>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  © 2026 Qamshy Made &nbsp;·&nbsp; Актобе, Казахстан &nbsp;·&nbsp; <a href="index.html">На главную</a>
+</div>
+
+<script>
+function filterCats(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('.cat-card-page,.promo-card-horiz').forEach(card=>{
+    var t=(card.querySelector('.ccname')||card.querySelector('[style]'))?.textContent.toLowerCase()||'';
+    var s=(card.querySelector('.ccsub'))?.textContent.toLowerCase()||'';
+    card.style.display=(!q||t.includes(q)||s.includes(q))?'':'none';
+  });
+}
+</script>
+</body>
+</html>
